@@ -1,0 +1,129 @@
+---
+title: "Lab 02"
+subtitle: "MATH 361"
+author: "Insert Your Name Here"
+date: "Insert Due Date Here"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_section: false
+    highlight: tango
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This lab is organized in 2 sections: Tutorial & Tasks
+
+The tutorial section will introduce new R commands, and the Tasks have you practice using those commands to answer questions. You should turn in this lab with all Tasks completed. 
+
+Let's first begin by loading the package we will need in this Lab: `tidyverse`. Note that R typically prints out lots of messages when we load packages, but we set `message = FALSE` when defining the code chunk to suppress the messages and de-clutter our html document.
+
+```{r, message = FALSE}
+library(tidyverse)
+```
+
+# Tutorial
+
+### Methods of Enumeration (Book Section 1.2) in R 
+
+*[Note: In order to view the mathematical formulas in this section, it will be easiest to read this section in the knitted html document. If you're curious, comparing the syntax inside the dollar signs in the .qmd to the formatted formulas in the html document will give you insight into how to type pretty math text using LaTeX! For example, in the formula below, the syntax `\cdot` stands for "center dot" and creates the multiplication dots that appear in the formula in the html. Typing mathematical formulas in Quarto is something we will focus on later in the course].* 
+
+#### Factorials
+
+Recall that $$n! = n \cdot (n-1) \cdot (n-2) \cdots 3 \cdot 2\cdot 1$$
+
+Therefore, if $n = 7$ then $n! = 7! = 7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 5040$. The function `factorial()` in R computes $n!$ for any integer input `n`. The code below computes `7!` and returns the value 5040.
+
+```{r}
+factorial(7)
+```
+
+#### Combinations
+
+Recall that the number of combinations $_nC_k$ (read "n choose k") is defined as $$_nC_k = {n\choose k} = \frac{n!}{k!(n-k)!}$$
+
+The number of possible combinations can be easily computed in `R` using the function `choose()`. This function takes in two arguments, named - you guessed it - `n` and `k`. The following code computes $$_5C_3 = {5\choose 3} = \frac{5!}{3!(5-3)!}$$ and returns the value 10.
+
+```{r}
+choose(n = 5, k = 3)
+```
+
+Note the code `choose(5, 3)` will return the same result because `R` automatically assigns the first input to the argument `n` and the second input to the argument `k`, without us having to specify the name of the argument.
+
+```{r}
+choose(5, 3)
+```
+
+The function `combn()` will actually list all the possible combinations. That is, the code `combn(5,3)` will list the 10 different ways it is possible to choose 3 elements from a list of 5 elements. 
+
+```{r}
+combn(5, 3)
+```
+
+Instead of just the integer `n`, you can also input an actual list of `n` elements. For example, if we create a list of names (called `names`) of the five people in Dr. Fitz's immediate family, `combn(names, 3)` will return the 10 combinations of 3 people we could choose from her family. 
+
+```{r}
+names <- c("Jim", "Liz", "Erin", "Katie", "Anna")
+combn(names, 3)
+```
+
+#### Permutations
+
+Recall that permutations give the total number of ways to order $k$ unique subjects, selected from $n$ subjects. Our mathematical formula is $$_nP_k = \frac{n!}{(n - k)!}$$
+
+The following code chunk computes $$_5P_3 = \frac{5!}{(5 - 3)!}$$ and should return the value 60.
+
+```{r, eval = FALSE}
+#permsn()
+#nsamp(n = 5, k = 3, ordered = TRUE)
+```
+
+Note that we set `ordered = TRUE` because order matters in permutations. If we instead set `ordered = FALSE`, the function would return the number of combinations, 10, instead. That is, there are two different ways of computing $_5C_3:$
+
+```{r, eval = FALSE}
+nsamp(n = 5, k = 3, ordered = FALSE)
+choose(n = 5, k = 3)
+```
+
+In a similar fashion to `combn()`, the function `permsn()` returns a list of all the possible permutations. 
+
+```{r, eval = FALSE}
+permsn(names, 3)
+```
+
+# Tasks
+
+Now that you've been introduced to some operations and functions in `R`, complete the following tasks for the Lab 02 assignment.
+
+For Tasks 1 - 3, assume Adam, Bianca, Cam, Derek, Emilio, and Faith attend a gathering and are selected as the six finalists for 3 door prizes. Suppose names are drawn randomly from a hat. 
+
+### Task 1
+
+The six attendees are given seats at the front of the room before the drawing. How many different possible ways can the six people be seated in six seats? 
+
+```{r}
+
+
+```
+
+### Task 2
+
+The first prize is better than the second which is better than the third. How many possible sets of prize winners are possible if it matters who wins which prize (and nobody can receive more than one prize). Also produce these different sets with the NAMES of the finalists included (see the family names example above). 
+
+```{r}
+
+```
+
+### Task 3
+
+All three prizes are the same, and nobody can win more than one. How many possible sets of winners are now possible if it doesn't matter which prize a person earns. Again, also use R to produce the different possible sets of winners using their names. 
+
+```{r}
+
+```
+
