@@ -1,0 +1,257 @@
+---
+title: "Chapter 2 R Activity / Lab 03"
+subtitle: "Intro to simulations & the tidyverse"
+author: "MATH 361"
+date: "Spring 2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We will complete most of this together in class, and you will turn it in for Lab 03. 
+
+## Motivating Example
+
+We will use the following example throughout this activity.
+
+A fair four-sided die with outcomes 1, 2, 3, and 4 is rolled twice. Let $X$ equal the sum of the two outcomes. Then the possible values of $X$ are 2, 3, 4, 5, 6, 7, and 8. It is not immediately obvious how to come up with a mathematical expression for the pmf of $X$. We can use simulations to explore the distribution of $X$. 
+
+## Logic of simulations
+
+Recall our earlier definition that probability is a mathematical framework for describing and analyzing random phenomenon (i.e. anything we cannot predict with certainty). We said probability can be interpreted as the proportion of times an event will occur *in the long run*. 
+
+If we don't have a nice mathematical formula to tell us what to expect in the long run (or even if we do), one great way to help us wrap our minds around the behavior of a random variable in the long run is to *simulate* the random experiment many, many times, and *observe* what happens in the long run. One option is to *physically* simulate an experiment (e.g. roll a physical dice many, many times, spin a spinner many, many times, etc.). But in the year of our Lord, 2022, we have machines that can do these things for us MANY, MANY times, MUCH, MUCH quicker than we could do them physically by hand. 
+
+Anytime we simulate a random variable $X$, it's important to ask ourselves a few questions (in order):
+
+1. *How would I simulate one value of $X$?* 
+1. *How would I simulate many values of $X$ (e.g. 10000+)? This usually involves repeating Step 1 many, many times.*
+1. *How do I aggregate all the simulated results to tell me what I want to know about the behavior of $X$ in the long run?*
+
+This R activity will walk us through a simulation example - and also introduce you to some new coding tools in a very important package called the `tidyverse`! 
+
+You can remove `eval = FALSE` from each code chunk as we go. 
+
+### Load packages
+
+As always, let's start by loading necessary packages. We will use `tidyverse`for this exercise. You may need to install this packages first before you can load it. 
+
+```{r packages,  warning = FALSE, message = FALSE}
+# load necessary packages
+library(tidyverse)
+```
+
+**How would I simulate one value of $X$?**
+
+Recall that $X$ is the sum of two rolls of a fair four-sided die. In order to simulate one value of $X$, we need:
+
+- the result of one roll of a four-sided die ($d_1$)
+- the result of a 2nd roll of a four-sided die ($d_2$)
+- the sum of the two rolls $x = d_1 + d_2$
+
+Recall that rolling a fair dice can be modeled with the uniform distribution. The `purrr` package (which is part of the `tidyverse` has a function `rdunif()` that allows us to randomly generate numbers from the discrete uniform distribution. The `rdunif` function takes in 3 arguments: `n` to specify the number of observations to generate (in our case, this will be the number of times we want to run the experiment); `a` to specify the minimum integer the random variable can take on; and `b` to specify the maximum integer the random variable can take on. 
+
+## Task 1
+
+Let's create three objects, `d1`, `d2`, and `x` that store the results of one run of our experiment.
+
+```{r one-run, eval = FALSE}
+d1 <- rdunif(n = , a = , b = )
+d2 <- rdunif(n = , a = , b = )
+x <- 
+```
+
+What `x` value did you get? How does it compare to your neighbor's? Did you have the same underlying `d1` and `d2` values? 
+
+> YOUR ANSWER HERE
+
+**How do I simulate many (e.g. 10,000+) values of $X$?**
+
+## Task 2
+
+Let's modify the code above to run the experiment 10,000 times. Remember: copy, paste, tweak. 
+
+*Hint: which of the arguments in `rdunif()` controls how many observations are simulated?*
+
+```{r many-runs}
+
+```
+
+Take a second to explore what's stored in the object `x` now. Looking in the Environment pane in the top right of RStudio will provide some insight. Make a note to yourself about what you see.
+
+> YOUR COMMENTS HERE
+
+**Organizing data in R**
+
+We often want to organize data in *rectangular spreadsheets*, where rows correspond to *observations*, and columns correspond to *variables*. 
+
+## Task 3
+
+What are the observations and what are the variables in the data we have simulated in this example? How many variables do we have? How many observations of each variable do we have? 
+
+> YOUR ANSWER HERE
+
+In R, the objects we use to store data in rectangular spreadsheets are called data frames. We can combine vectors into a data frame using the function `data.frame()`
+
+```{r dataframe, eval = FALSE}
+data <- data.frame(d1, d2, x)
+```
+
+## Task 4
+
+Take a second to explore what's stored in the object `data` now. Add comments (using the hashtag symbol #) to the code below to describe what the functions `class()` and `dim()` do.
+
+```{r explore_x}
+class(data) #add comment here
+dim(data) #add comment here
+```
+
+Click on the spreadsheet icon for `data` in the Environment pane or run `View(data)` in your console to view all the data in spreadsheet form. Note: View() is an interactive function that makes a window pop up in RStudio, so you will get an error if you try to knit your document with `View()` in a code chunk. Therefore you should only execute `View()` via the console. 
+
+## Exploring aggregate behavior
+
+Now that we have simulated many values of $X$, we can now explore its aggregate behavior (i.e. its distribution). However, first as a sanity check, let's plot `d1` and `d2` to see if they are uniformly distributed as expected. 
+
+Note: the `tidyverse` includes a very powerful package called `ggplot2` that can be used to create beautiful and fancy visualizations. Don't worry about all the details of the code, you won't be expected to build complicated plots from scratch; you'll be able to do everything using the copy, paste, tweak approach! 
+
+## Plotting basics with `ggplot`
+
+```{r dplots, eval = FALSE}
+ggplot(data = data) +
+  geom_bar(aes(x = d1))
+
+ggplot(data = data) +
+  geom_bar(aes(x = d2))
+```
+
+## Task 5
+
+Do `d1` and `d2` look uniformly distributed? Remember, because these are simulations, we only expect the results to be *approximately* correct. Compare your plot to your neighbor's. 
+
+> YOUR ANSWER HERE
+
+
+If `d1` and `d2` are both uniform, do you think `d1 + d2` will also be uniform? 
+
+> YOUR GUT INTUITION HERE
+
+Let's plot `x` to find out. Copy, paste, tweak the code for the bar plot above to create a bar plot for `x`.
+
+```{r xplot}
+#insert code here
+```
+
+## An aside to introduce the pipe operator `%>%` 
+
+Before we continue, let’s first introduce a nifty tool that gets loaded with the `tidyverse` package: the pipe operator %>%. 
+
+Take a minute to read through Section 3.1 in [this textbook](https://nustat.github.io/intro-stat-ds/3-wrangling.html#piping), of which yours truly is an author :)
+
+### Back to our example...
+
+Now that we've visualized the distribution of `x`, let's summarize the distribution with a table of relative frequencies. We want to take our `data`, *then* count the number of times each `x` value occurs, *then* divide by the total number of observations. Notice, every time we used "then" or "and then" in the previous sentence is a good place to use the pipe operator. Let's take it step-by-step. 
+```{r count, eval = FALSE}
+#Take the data and then count the x values:
+data %>% 
+  count(x)
+```
+
+Note that by default, `count()` names the count column `n`. Since we've already been using `n` to refer to the number of simulations, to avoid confusion, let's override the default using the `name` argument in `count()`. Let's name the column "count".
+
+```{r count2, eval = FALSE}
+data %>% 
+  count(x, name = "count")
+```
+
+## Task 6
+
+Comprehension check: what should the numbers in the `count` column sum to? (You don't have to perform this calculation)
+
+> YOUR ANSWER HERE
+
+## Task 7
+
+The last step in calculating relative frequencies is to divide the count by the total number of observations. The function `mutate()` allows us to create new variables by *mutating* existing variables. Let's add on to our chain of operations by performing the next task in finding the relative frequencies: divide `count` by the total number of observations, in this case `10000`. Since this is the last step, we can save the results into an object called `data_summary`.
+
+```{r rel-freq, eval = FALSE}
+____________ <- data %>% 
+  count(x, name = "count") %>% 
+  mutate(rel_freq = _____/____)
+
+data_summary
+```
+
+Another way of visualizing the distribution of $X$ is to plot the relative frequencies directly. If your data is already aggregated and includes the relative frequencies (rather than the raw data with the 10000 observations), we can use `geom_col` instead of `geom_bar` to plot the data.
+
+```{r rel-freq-plot, eval=FALSE}
+ggplot(data = data_summary) +
+   geom_col(aes(x = x, y = rel_freq))
+```
+
+Notice that this has the exact same shape as the plot above, but the y-axis is now relative frequencies rather than raw counts. 
+
+## Comparing the simulated distribution to the theoretical distribution
+
+Let's say you see on the internet that the true pmf of $X$ is given by $$f(x) = \frac{(4 - |x-5|)}{16}.$$
+
+Based on our simulations, does that seem reasonable? Let's compare visually and in a table. 
+
+## Task 8
+
+First, start by creating a new column in `data_summary` that computes the `pmf` for each value of `x`. Hint: the function `abs()` is used to calculate absolute values in `R`. And remember - R works like a big calculator! 
+
+```{r pmf, eval = FALSE}
+data_summary <- data_summary %>% 
+  mutate(pmf = __________)
+data_summary
+```
+
+How do the simulated relative frequencies compare to the true pmf? Compare with a neighbor. 
+
+> YOUR ANSWER HERE
+
+The following code helps us compare the two distributions (the simulated and the theoretical) visually. We plot the distribution implied by the pmf $f(x)$ in blue. 
+
+```{r pmf-plot, eval = FALSE}
+ggplot(data = data_summary) +
+  geom_col(aes(x = x, y = rel_freq), alpha = 0.5) +
+  geom_col(aes(x = x, y = pmf), color = "blue", fill = NA)
+```
+
+## Task 9
+
+How do the distributions compare? Compare your plot to your neighbor's. Does $f(x)$ seem like a reasonable formula for the pmf of $X$? 
+
+> YOUR ANSWER HERE
+
+## Putting it all together
+
+Although we took our time with each step above, we can put it all together and run the whole activity with relatively few lines of code. Let's create one code chunk that simulates the data and creates both the table and the plot to compare the simulated and theoretical distributions. 
+
+```{r all}
+#simulate data
+d1 <- rdunif(n = 10000, a = 1, b = 4)
+d2 <- rdunif(n = 10000, a = 1, b = 4)
+x <- d1 + d2
+#combine into one data frame
+data <- data.frame(d1, d2, x)
+
+#create relative frequency table
+data_summary <- data %>% 
+  count(x, name = "count") %>% 
+  mutate(rel_freq = count/10000,
+         pmf = (4 - abs(x - 5))/16)
+data_summary
+
+#create plot
+ggplot(data = data_summary) +
+  geom_col(aes(x = x, y = rel_freq), alpha = 0.5) +
+  geom_col(aes(x = x, y = pmf), color = "blue", fill = NA)
+```
+
+## BONUS
+
+See what happens to the distributions if you run more experiments. That is, try running 100,000 instead of 10,000. 
+
