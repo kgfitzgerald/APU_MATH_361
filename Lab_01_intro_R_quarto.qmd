@@ -1,0 +1,203 @@
+---
+title: "Lab 00"
+format: html
+---
+
+# Tutorial Part 1: Quarto
+
+This is a [Quarto](https://quarto.org) document. Quarto is a multi-language open-sourced scientific and technical publishing system  that lets you integrate narrative text, code, mathematical equations, figures, tables, citations, cross-references, etc. to create high-quality articles, reports, websites, blogs, books, presentations, and more.
+
+In this course, we will be using Quarto to execute R code, but Quarto is compatible with multiple languages including Python and Julia. 
+
+### Quick Settings changes
+
+Before we get started, let's change two Settings:
+
+-   Find the gear/sprocket icon next to the **Render** button (on the same line as the save, spellcheck, and search icons)
+
+-   Click the gear/sprocket icon and then select **Preview in Viewer Pane**.
+
+-   Click the gear/sprocket icon again and select **Chunk Output in Console**
+
+## Why Quarto?
+
+Organizing and communicating your work is an extremely important aspect of any science. In most cases that is the main objective of statistical work. We want to use mathematical and statistical theory as well as data to build understanding and insight into the world around us. RStudio makes the process of organizing and communicating work with math, code, and data much easier by using Quarto. 
+
+_How does Quarto make it easier?_
+
+Quarto allows us to produce documents that "Render" together content and output from embedded R code. That is, we can do both computational work and writing about results in one document --- this saves us from a lot of tedious work and errors!
+
+To help us compare how the code in the Quarto document produces what appears in the html document, click the **Render** button (blue arrow between search and settings icons above). Once the .html renders, you should be able to view the .qmd document on the left and the html version that is now previewed in the viewer pane on the right.
+
+## Embedded R Code
+
+Looking in the Quarto document (not the rendered html), we can see that an R code chunk has been created below; an R code chunk will always start and end with three back ticks, and the code you want to run is included in the lines in between the back ticks. The first line of the code chunk will also always include `r` inside a set of brackets to tell Quarto that the code you've written is in the R programming language. Quarto also allows you to run code that's written in other languages such as Python, SQL, etc., but we won't be doing that in this course!  
+
+The embedded R code we've included here `summary(cars)` returns a quick summary on the 2 variables contained in a data set named `cars`.
+
+```{r}
+summary(cars)
+```
+
+When looking at the html document, we can see that only the code itself `summary(cars)` is visible, but not the syntax (i.e. the back ticks, brackets, etc) that created the code chunk. The html also includes the output from the code, immediately after the code itself. 
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure_plot, echo=FALSE}
+plot(pressure)
+```
+
+Note in the .qmd that the `echo=FALSE` option was added to the code chunk to prevent printing of the R code that generated the plot. We also included a name for this code chunk `pressure_plot`. Naming code chunks is not necessary, but it is often considered good workflow practice. 
+
+## R as a calculator
+
+`R` can be used as a calculator. Basic operations include addition/subtraction `3 + 2`, multiplication/division `3*2`, and exponentiation `3^2`. Try typing each of these commands in the console and verify that you get the output you expect. In `R`, parentheses are not automatically read as multiplication, so `3(2 + 1)` will produce an error; you instead must type `3*(2 + 1)`.
+
+## Creating objects in R
+
+"Objects" are the term for where values are saved in R. We assign values to objects using the "assignment operator" `<-`. For example, we can assign the value `9` to the object `x` with the code `x <- 9`. You can think of the assignment operator as an arrow pointing left; it takes the value on the right, and saves it into the object on the left. Run the following code chunk by clicking the green arrow on the right hand side of the code chunk. 
+
+```{r create_x}
+x <- 9
+```
+
+Check the "Environment" pane (the top-right pane in your RStudio window), and you should see that it now includes the object `x`. This means that R now knows what `x` is, and you can use `x` to perform other operations. Run the code chunk below and examine the output. Play around with other operations you can perform with `x` (division, exponentiation, etc.)
+
+```{r use_x}
+x*2
+```
+
+### Creating lists (vectors) in R                                                                    
+The syntax `c()` (which stands for 'concatenate') allows us to create a list of values. The following code creates a list called `L1` that contains the numbers 1 through 5. Notice that just running the first line of code only creates the object but does not produce any output. Once an object is created in R, we can "print" out its contents by running a line of code with the name of the object. 
+
+```{r}
+L1 <- c(1, 2, 3, 4, 5)
+L1
+```
+
+Mathematical operations are applied to each element of a list. For example, `L1 - 2` subtracts 2 from every element in `L1`. 
+
+```{r}
+L1 - 2
+```
+
+R syntax abides by the usual order of operations: `3 + 2*L1` first multiplies every element in `L1` by 2, and then adds 3. 
+
+```{r}
+3 + 2*L1
+```
+
+There are several ways to quickly create sequences. Instead of typing out each number 1, 2, 3, 4, 5 above, we could use the code `c(1:5)`. The code `c(21:26)` would create a list with the numbers 21, 22, 23, 24, 25, 26. Explore what the code `seq(from = 1, to = 10, by = 2)` produces.
+
+```{r}
+c(1:5)
+c(21:26)
+seq(from = 1, to = 10, by = 2)
+```
+
+### Functions in R
+
+`seq()` is what we call a function. Functions perform tasks in R. Just like in math, they take inputs (which in R we call *arguments*) and return an output. Above, the code `seq(from = 1, to = 10, by = 2)` had three arguments (`from`, `to` and `by`), and its output was a vector of numbers. In more familiar mathematical language, you can think of `seq()` as being a function $f(x, y, z)$, and we are asking `R` to evaluate this function $f$ for $x = 1$, $y = 10$ and $z = 2$. That is, R gives the result of $f(1, 10, 2)$. 
+
+Once you are more familiar with the built-in functions in `R` and what arguments they require, you can often leave off the names of the arguments. That is, `seq(1, 10, 2)` would produce the same result as the code we ran above. Using the help function in `R` can help remind you what the required arguments are for a specific function, what order they should be in, and what the default values are. Typing `?seq` in the console will make the help page for the function `seq()` pop up in the lower-right pane in R Studio. However, Google is often a more helpful resource than the help window! 
+
+R has built in functions that operate on lists. For example, `sum(L1)` will sum up all the elements in `L1`, `max(L1)` will return the largest value in the list, etc. Recall that we defined `L1` to be a vector with elements 1, 2, 3, 4, 5. Therefore, we expect `sum(L1)` to return the value 15, since 1 + 2 + 3 + 4 + 5 = 15. 
+
+```{r}
+sum(L1)
+max(L1)
+```
+
+# Tasks
+
+Complete the following series of tasks. Remember to **render early and render often**.
+
+## Task 1
+
+Let's make some adjustments to the YAML at the top of this document:
+
+1. Change the title to "Lab 00 - Quarto Practice".
+1. Add a "MATH 361" as a subtitle. Hint `subtitle:` goes right below `title:`.
+1. Change the author to your name.
+1. Change the date to today's date (or the due date).
+
+
+## Task 2
+
+Insert an R code chuck below, and write a line of code that creates an object `y` and assigns it the value `45`. Note, you can create a code chunk by clicking the green "+C" icon in the toolbar above.  *Hint: see the code chunk `create_x` above.*
+
+
+## Task 3
+
+Change the R code chunk options below to `eval=TRUE` or alternatively you can simply remove `, eval=FALSE` from the code chunk options. Either will have the same effect. render the document and observe the output of `x*y`. Is it what you expected? Note: This depends on completing **Task 2** correctly. 
+
+```{r task3, eval=FALSE}
+x * y
+```
+
+## Task 4
+
+Create a list `L1` that contains all the even integers from -10 to 10. Use the `seq()` function instead of typing the numbers manually. Verify that `L1` contains 11 elements by using the function `length()` to count the number of elements in `L1`. 
+
+```{r task4}
+
+
+```
+
+## Task 5
+
+Create a second list called `L2` that computes the absolute value of each of the values in `L1`, and print out `L2` to verify that it performed the operation you expected. 
+
+> *Hint: the R function for computing the absolute value is `abs()`.* 
+
+> *Note: we use the language "print ___ " to mean "tell R to show the values stored in the object named ____." You don't need to physically print the results :)* 
+
+```{r task5}
+
+
+```
+
+
+### Task 6
+
+Use the function `min()` to compute the minimum value in `L1`. Compare this to the minimum value in `L2`. 
+
+> *BONUS: store these two values in a new list called `mins` using the `c()` function, and print the results of the new object `mins`*
+
+```{r task6}
+
+```
+
+## Task 7
+
+Once you have completed Tasks 1 - 7, render the document one last time. Look over the .html document to make sure that everything is visible and formatted as you intended. To complete this lab assignment, you will upload your Lab_00.html to Canvas.
+
+## OPTIONAL (Very) Brief Intro to LaTeX
+
+RMarkdown also makes it easy to seamlessly type mathematical notation and formulas, using what's known as LaTeX code. LaTeX (pronounced LAY-tekh, or LAH-tekh) is a tool for typesetting professional scientific documents. It has a broad range of capabilities and is a software system in and of itself, but its basic functioning for typing mathematical notation is pretty easy to pick up. You won't be expected to type your own formulas in this course, but you may nonetheless find it interesting or useful to know the basics. 
+
+To type in mathematical notation in an RMarkdown document, use single dollar signs: $x^2 + y^2 = 9$. To center an equation, use double dollar signs: $$x^2 + y^2 = 9$$. 
+
+Here is some common mathematical notation that will appear in this class (see .qmd for how to typeset these symbols, see rendered .html for how they appear when formatted):
+
++ Greek letters: e.g. $\mu$, $\sigma$
++ Underscores: $X_i$, $H_0$
++ Exponents: $\sigma^2$
++ Bars: $\bar{x}$ or $\overline{x}$
++ Hats: $\hat{p}$
++ Sums: $\sum_{i = 1}^n X_i$
++ Fractions: $\frac{1}{2}$ or $\bar{X} = \frac{\sum_{i = 1}^n X_i}{n}$
++ Square root: $\sqrt{n}$
++ Subsets: $A \subset B$
++ Union: $A \cup B$
++ Intersection: $A \cap B$
+
+See cheatsheet on Canvas for more extensive list. And remember: Google is your friend! 
+```{r}
+```
+
+
+```{r}
+```
