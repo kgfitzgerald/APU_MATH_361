@@ -1,9 +1,20 @@
 ---
-title: "Lab 00"
-format: html
+title: "Lab 01 - Intro to R / Quarto Practice"
+author: "YOUR NAME HERE"
+date: "ENTER DATE HERE"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
 ---
 
-# Tutorial Part 1: Quarto
+# Tutorial
 
 This is a [Quarto](https://quarto.org) document. Quarto is a multi-language open-sourced scientific and technical publishing system  that lets you integrate narrative text, code, mathematical equations, figures, tables, citations, cross-references, etc. to create high-quality articles, reports, websites, blogs, books, presentations, and more.
 
@@ -45,11 +56,13 @@ When looking at the html document, we can see that only the code itself `summary
 
 You can also embed plots, for example:
 
-```{r pressure_plot, echo=FALSE}
+```{r}
+#| label: pressure-plot
+#| echo: false
 plot(pressure)
 ```
 
-Note in the .qmd that the `echo=FALSE` option was added to the code chunk to prevent printing of the R code that generated the plot. We also included a name for this code chunk `pressure_plot`. Naming code chunks is not necessary, but it is often considered good workflow practice. 
+Note in the .qmd that the `echo: false` option was added to the code chunk to prevent printing of the R code that generated the plot. We also included a label for this code chunk `pressure-plot`. Labeling code chunks is not necessary, but it is often considered good workflow practice. 
 
 ## R as a calculator
 
@@ -59,17 +72,19 @@ Note in the .qmd that the `echo=FALSE` option was added to the code chunk to pre
 
 "Objects" are the term for where values are saved in R. We assign values to objects using the "assignment operator" `<-`. For example, we can assign the value `9` to the object `x` with the code `x <- 9`. You can think of the assignment operator as an arrow pointing left; it takes the value on the right, and saves it into the object on the left. Run the following code chunk by clicking the green arrow on the right hand side of the code chunk. 
 
-```{r create_x}
+```{r}
+#| label: create_x
 x <- 9
 ```
 
 Check the "Environment" pane (the top-right pane in your RStudio window), and you should see that it now includes the object `x`. This means that R now knows what `x` is, and you can use `x` to perform other operations. Run the code chunk below and examine the output. Play around with other operations you can perform with `x` (division, exponentiation, etc.)
 
-```{r use_x}
+```{r}
+#| label: use_x
 x*2
 ```
 
-### Creating lists (vectors) in R                                                                    
+### Creating lists (vectors) in R                                                               
 The syntax `c()` (which stands for 'concatenate') allows us to create a list of values. The following code creates a list called `L1` that contains the numbers 1 through 5. Notice that just running the first line of code only creates the object but does not produce any output. Once an object is created in R, we can "print" out its contents by running a line of code with the name of the object. 
 
 ```{r}
@@ -118,8 +133,7 @@ Complete the following series of tasks. Remember to **render early and render of
 
 Let's make some adjustments to the YAML at the top of this document:
 
-1. Change the title to "Lab 00 - Quarto Practice".
-1. Add a "MATH 361" as a subtitle. Hint `subtitle:` goes right below `title:`.
+1. Add "MATH 361" as a subtitle. Hint `subtitle:` goes right below `title:`.
 1. Change the author to your name.
 1. Change the date to today's date (or the due date).
 
@@ -131,9 +145,11 @@ Insert an R code chuck below, and write a line of code that creates an object `y
 
 ## Task 3
 
-Change the R code chunk options below to `eval=TRUE` or alternatively you can simply remove `, eval=FALSE` from the code chunk options. Either will have the same effect. render the document and observe the output of `x*y`. Is it what you expected? Note: This depends on completing **Task 2** correctly. 
+Change the R code chunk options below to `eval: true` or alternatively you can simply remove `, eval: false` from the code chunk options. Either will have the same effect. render the document and observe the output of `x*y`. Is it what you expected? Note: This depends on completing **Task 2** correctly. 
 
-```{r task3, eval=FALSE}
+```{r}
+#| label: task3
+#| eval: false
 x * y
 ```
 
@@ -141,8 +157,8 @@ x * y
 
 Create a list `L1` that contains all the even integers from -10 to 10. Use the `seq()` function instead of typing the numbers manually. Verify that `L1` contains 11 elements by using the function `length()` to count the number of elements in `L1`. 
 
-```{r task4}
-
+```{r}
+#| label: task4
 
 ```
 
@@ -154,8 +170,8 @@ Create a second list called `L2` that computes the absolute value of each of the
 
 > *Note: we use the language "print ___ " to mean "tell R to show the values stored in the object named ____." You don't need to physically print the results :)* 
 
-```{r task5}
-
+```{r}
+#| label: task5
 
 ```
 
@@ -166,13 +182,36 @@ Use the function `min()` to compute the minimum value in `L1`. Compare this to t
 
 > *BONUS: store these two values in a new list called `mins` using the `c()` function, and print the results of the new object `mins`*
 
-```{r task6}
+```{r}
+#| label: task6
 
 ```
 
 ## Task 7
 
-Once you have completed Tasks 1 - 7, render the document one last time. Look over the .html document to make sure that everything is visible and formatted as you intended. To complete this lab assignment, you will upload your Lab_00.html to Canvas.
+Once you have completed Tasks 1 - 6, render the document one last time. Look over the .html document to make sure that everything is visible and formatted as you intended. To submit this lab assignment, you need to export your .html document from RStudio Cloud and then upload it to the Lab 00 assignment on Canvas.
+
+To export the file,
+
++ Navigate to the Files pane in RStudio Cloud (bottom right quadrant, to the left of the Viewer tab)
+
++ Select the box next to the appropriate file name in the Files quadrant
+
++ Click "More" (blue gear icon), and then "Export"
+
+The file will export to the downloads file on your computer. To submit on Canvas, follow these steps:
+
++ In the MATH 361 Canvas site, navigate to Lab 01 under Assignments
+
++ Click "Start Assignment"
+
++ Click "Upload File"
+
++ Click "Choose File"
+
++ In the pop-up window, navigate to your Downloads folder and select your html file
+
++ Click "Submit Assignment"
 
 ## OPTIONAL (Very) Brief Intro to LaTeX
 

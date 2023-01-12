@@ -1,5 +1,5 @@
 ---
-title: "TEST Lab 02"
+title: "Lab 02"
 subtitle: "MATH 361"
 author: "Insert Your Name Here"
 date: "Insert Due Date Here"
