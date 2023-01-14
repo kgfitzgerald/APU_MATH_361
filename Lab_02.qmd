@@ -1,37 +1,43 @@
 ---
 title: "Lab 02"
-subtitle: "MATH 361"
-author: "Insert Your Name Here"
-date: "Insert Due Date Here"
-output: 
-  html_document:
+author: "YOUR NAME HERE"
+date: "ENTER DATE HERE"
+format: 
+  html:
+    self-contained: true
     toc: true
     toc_float: true
-    number_section: false
+    number-section: false
     highlight: tango
+editor: visual
 editor_options: 
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 This lab is organized in 2 sections: Tutorial & Tasks
 
-The tutorial section will introduce new R commands, and the Tasks have you practice using those commands to answer questions. You should turn in this lab with all Tasks completed. 
+The tutorial section will introduce new R commands, and the Tasks have you practice using those commands to answer questions. You should turn in this lab with all Tasks completed.
 
-Let's first begin by loading the package we will need in this Lab: `tidyverse`. Note that R typically prints out lots of messages when we load packages, but we set `message = FALSE` when defining the code chunk to suppress the messages and de-clutter our html document.
+Let's first begin by loading the package we will need in this Lab: `gtools`. You may need to install the package first by running `install.packages("gtools")` in your console. You can think of a package like an app on your phone: you only need to install it once, but you must "open" it each time you want to use it. In order to "open" (i.e. "load") the package, we use the `library()` command.
 
-```{r, message = FALSE}
-library(tidyverse)
+```{r}
+#| message: false
+library(gtools)
 ```
+
+Note that R typically prints out lots of messages when we load packages, but we set `message: false` when defining the code chunk above to suppress the messages and de-clutter our html document.
 
 # Tutorial
 
-### Methods of Enumeration (Book Section 1.2) in R 
+### Methods of Enumeration (Book Section 1.2) in R
 
-*[Note: In order to view the mathematical formulas in this section, it will be easiest to read this section in the knitted html document. If you're curious, comparing the syntax inside the dollar signs in the .qmd to the formatted formulas in the html document will give you insight into how to type pretty math text using LaTeX! For example, in the formula below, the syntax `\cdot` stands for "center dot" and creates the multiplication dots that appear in the formula in the html. Typing mathematical formulas in Quarto is something we will focus on later in the course].* 
+*\[Note: In order to view the mathematical formulas in this section, it will be easiest to read this section in the rendered .html OR by reading the .qmd in "Visual" mode; you can toggle between "Source" and "Visual" mode using the toolbar in the top left of RStudio . If you're curious, comparing the syntax inside the dollar signs in the "Source" mode to the formatted formulas in the html document will give you insight into how to type pretty math text using LaTeX!\].*
 
 #### Factorials
 
@@ -59,61 +65,52 @@ Note the code `choose(5, 3)` will return the same result because `R` automatical
 choose(5, 3)
 ```
 
-The function `combn()` will actually list all the possible combinations. That is, the code `combn(5,3)` will list the 10 different ways it is possible to choose 3 elements from a list of 5 elements. 
+The function `combinations()` will actually list all the possible combinations. That is, the code `combinations(5,3)` will list the 10 different ways it is possible to choose 3 elements from a list of 5 elements.
 
 ```{r}
-combn(5, 3)
+combinations(5, 3)
 ```
 
-Instead of just the integer `n`, you can also input an actual list of `n` elements. For example, if we create a list of names (called `names`) of the five people in Dr. Fitz's immediate family, `combn(names, 3)` will return the 10 combinations of 3 people we could choose from her family. 
+Instead of just generic number orderings, you can also provide the function with a vector of names/labels to choose from. For example, if we create a vector of names (called `names`) of the five people in Dr. Fitz's immediate family, `combinations(5, 3, names)` will return the 10 combinations of 3 people we could choose from her family.
 
 ```{r}
 names <- c("Jim", "Liz", "Erin", "Katie", "Anna")
-combn(names, 3)
+combinations(5, 3, names)
 ```
 
 #### Permutations
 
 Recall that permutations give the total number of ways to order $k$ unique subjects, selected from $n$ subjects. Our mathematical formula is $$_nP_k = \frac{n!}{(n - k)!}$$
 
-The following code chunk computes $$_5P_3 = \frac{5!}{(5 - 3)!}$$ and should return the value 60.
+In a similar fashion to `combinations()`, the function `permutations()` returns a matrix of all the possible permutations.
 
-```{r, eval = FALSE}
-#permsn()
-#nsamp(n = 5, k = 3, ordered = TRUE)
+```{r}
+permutations(5, 3, names)
 ```
 
-Note that we set `ordered = TRUE` because order matters in permutations. If we instead set `ordered = FALSE`, the function would return the number of combinations, 10, instead. That is, there are two different ways of computing $_5C_3:$
+If we want to simply compute the number of permutations (instead of listing them all out), we can nest the `permutations()` code inside the `nrow()` function, which counts the number of rows in a matrix or dataframe. The following code chunk computes $$_5P_3 = \frac{5!}{(5 - 3)!}$$ and should return the value 60.
 
-```{r, eval = FALSE}
-nsamp(n = 5, k = 3, ordered = FALSE)
-choose(n = 5, k = 3)
-```
-
-In a similar fashion to `combn()`, the function `permsn()` returns a list of all the possible permutations. 
-
-```{r, eval = FALSE}
-permsn(names, 3)
+```{r}
+nrow(permutations(5, 3))
 ```
 
 # Tasks
 
 Now that you've been introduced to some operations and functions in `R`, complete the following tasks for the Lab 02 assignment.
 
-For Tasks 1 - 3, assume Adam, Bianca, Cam, Derek, Emilio, and Faith attend a gathering and are selected as the six finalists for 3 door prizes. Suppose names are drawn randomly from a hat. 
+For Tasks 1 - 3, assume Adam, Bianca, Cam, Derek, Emilio, and Faith attend a gathering and are selected as the six finalists for 3 door prizes. Suppose names are drawn randomly from a hat.
 
 ### Task 1
 
-The six attendees are given seats at the front of the room before the drawing. How many different possible ways can the six people be seated in six seats? 
+The six attendees are given seats at the front of the room before the drawing. How many different possible ways can the six people be seated in six seats?
 
 ```{r}
-
 
 ```
 
 ### Task 2
 
-The first prize is better than the second which is better than the third. How many possible sets of prize winners are possible if it matters who wins which prize (and nobody can receive more than one prize). Also produce these different sets with the NAMES of the finalists included (see the family names example above). 
+The first prize is better than the second which is better than the third. How many possible sets of prize winners are possible if it matters who wins which prize (and nobody can receive more than one prize). Also produce these different sets with the NAMES of the finalists included (see the family names example above).
 
 ```{r}
 
@@ -121,9 +118,28 @@ The first prize is better than the second which is better than the third. How ma
 
 ### Task 3
 
-All three prizes are the same, and nobody can win more than one. How many possible sets of winners are now possible if it doesn't matter which prize a person earns. Again, also use R to produce the different possible sets of winners using their names. 
+All three prizes are the same, and nobody can win more than one. How many possible sets of winners are now possible if it doesn't matter which prize a person earns. Again, also use R to produce the different possible sets of winners using their names.
 
 ```{r}
 
 ```
 
+### BONUS 1
+
+Having to use `nrow()` around `permutations()` is a little cumbersome and computationally wasteful (generates a whole matrix only to collapse it down to one number by counting its rows). We can use R to write our own functions. The code below creates a function called `perm_count`, which takes the arguments `n` and `k`, and uses the permutation formula (involving factorials) to compute $_nP_k$
+
+```{r}
+perm_count <- function(n, k){
+  factorial(n)/(factorial(n - k))
+}
+```
+
+Write a similar function called `comb_count` that computes the number of combinations. Note, your function should return the same values as the `choose()` function. Use your function to compute 64 choose 4.
+
+```{r}
+
+```
+
+### BONUS 2 - EXTRA CHALLENGE
+
+Write a function called `pascals` that takes in one argument `n` and returns a vector with the `n + 1` coefficients of the $n^{th}$ row of Pascal's triangle. That is `pascals(0)` should return `1`, `pascals(3)` should return `1 3 3 1`, etc. Note, there are many ways to do this, but you can make use of existing R functions such as `choose()` and/or `factorial()`.
