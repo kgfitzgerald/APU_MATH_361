@@ -58,7 +58,7 @@ Adapt your code from Tasks 1 and 2 to simulate 100,000 values of `X`, `Y`, and `
 
 ## Task 4
 
-The following code combines the vectors into a data frame, and creates summary tables and a visualization for the distribution of `X`. Remove `eval: false` so the output will in your html.
+The following code combines the vectors into a data frame, and creates summary tables and a visualization for the distribution of `X`. Remove `eval: false` so the output will be in your html.
 
 ```{r}
 #| eval: false
