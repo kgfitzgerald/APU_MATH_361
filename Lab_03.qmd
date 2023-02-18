@@ -3,7 +3,16 @@ title: "Lab 03 / 2.1 Group Work"
 subtitle: "Intro to simulations"
 author: "MATH 361"
 date: "Spring 2023"
-output: html_document
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
