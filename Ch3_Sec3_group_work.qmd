@@ -1,0 +1,97 @@
+---
+title: "Normal Distribution Practice"
+subtitle: "MATH 361"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+Let's simulate 100,000 SAT scores, which have a normal distribution with mean 1500 and standard deviation 200. We'll then convert them to Z-scores to explore the properties of Z-scores and the normal distribution more broadly.
+
+Some questions to explore:
+
+-   What is the shape of both distributions?
+-   What is the range of both distributions?
+-   What is the center of both distributions?
+-   What makes some z-scores negative?
+-   Do larger distances from the mean correspond to smaller or larger z-scores?
+-   What % of values fall within 1 sd of the mean?
+-   What % of values fall within 2 sds of the mean?
+-   What % of values fall within 3 sds of the mean?
+-   What changes about any of the above properties when you change the mean and the standard deviation?
+
+```{r}
+
+```
+
+## Practice with `pnorm()`
+
+### Task 1
+
+Assume $Z \sim N(0,1)$. Find the following:
+
+a.  $P(Z \leq 1.25)$
+b.  $P(1.25 \leq Z \leq 2.31)$
+c.  $P(-2.31 \leq Z \leq -1.25)$
+d.  $P(Z \leq -2.31)$
+e.  $P(-2.31 \leq Z \leq 1.25)$
+f.  $P(Z > 1.25)$
+
+```{r}
+
+```
+
+If you haven't already, draw pictures of each of the probabilities you computed above. How do b & c relate to one another?
+
+> YOUR ANSWER HERE
+
+What about a, d, & e?
+
+> YOUR ANSWER HERE
+
+What about a & f?
+
+> YOUR ANSWER HERE
+
+## Task 2
+
+The textbook defines a quantity $z_{\alpha}$ as: $P(Z \geq z_{\alpha}) = \alpha$. (This is unusual as it is the $(1-\alpha)th$ percentile). Find:
+
+a.  $z_{0.9147}$
+b.  $z_{0.0125}$
+c.  $z_{0.05}$
+d.  $-z_{0.025}$
+
+```{r}
+
+```
+
+### Task 3
+
+Let $X \sim N(3,16)$. Find $P(4 \leq X \leq 8)$.
+
+```{r}
+
+```
+
+### Task 4
+
+*Note, this problem comes from #3.3-5 in the textbook, so you can check your answers.*
+
+If $X$ is normally distributed with a mean of 6 and a variance of 25, find:
+
+a.  $P(6 \leq X \leq 14)$
+b.  $P(4 \leq X \leq 14)$
+c.  $P(-4 \leq X \leq 0)$
+d.  $P(X > 15)$
+e.  $P(|X - 6| < 5)$
+f.  $P(|X - 6| < 10)$
+g.  $P(|X - 6| < 15)$
+h.  $P(|X - 6| < 12.4)$
