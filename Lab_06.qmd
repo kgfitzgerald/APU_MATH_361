@@ -3,12 +3,14 @@ title: "Lab 06"
 subtitle: "MATH 361"
 author: "Insert your name here"
 date: "Insert due date here"
-output: 
-  html_document:
+format: 
+  html:
+    self-contained: true
     toc: true
     toc_float: true
-    number_section: false
+    number-section: false
     highlight: tango
+editor: visual
 editor_options: 
   chunk_output_type: console
 ---
