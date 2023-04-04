@@ -1,0 +1,178 @@
+---
+title: "Bias Demo - sample mean & variance"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(32752)
+```
+
+This activity is a demo of sample statistics being (un)biased estimators of their population parameters. We will examine $\overline{X}$ as an estimator for $\mu$ and the sample variance $s^2$ as an estimator for $\sigma^2$.
+
+## Load packages
+
+We first need to load the `tidyverse`, `dslabs`, and `infer` packages using the `library()` command.
+
+```{r, message = FALSE}
+library(tidyverse)
+library(dslabs)
+library(infer)
+```
+
+## Prepare the data
+
+We can load a dataset called `gapminder` that contains data on 185 countries from the years 1960 to 2016. We are going to consider the distribution of the variable `life_expectancy`.
+
+```{r}
+data("gapminder", package = "dslabs") 
+```
+
+Let's first `filter` the data to keep only the year 2015.
+
+```{r}
+gapminder_2015 <- gapminder %>% 
+  filter(year == 2015)
+```
+
+`gapminder_2015` has data on life expectancy for 185 countries. We will consider this to be our population. We can visualize the distribution of `life_expectancy` with a histogram.
+
+```{r}
+ggplot(gapminder_2015, aes(x = life_expectancy)) +
+  geom_histogram(color = "white", binwidth = 2) + 
+  theme_minimal()
+```
+
+## Population mean & Sample mean
+
+We can compute the true mean $\mu$ life expectancy in the population by:
+
+```{r}
+gapminder_2015 %>% 
+  summarize(n = n(),
+            mu = sum(life_expectancy)/n)
+```
+
+Suppose we don't have access to this population level data and instead only have data on a random sample of 5 countries. This means we don't know $\mu$ but have to estimate it.
+
+Let's draw a random sample of size 5 and compute the sample mean.
+
+```{r}
+sample <- gapminder_2015 %>% 
+  sample_n(5)
+sample
+
+sample %>% 
+  summarize(n = n(),
+            xbar = mean(life_expectancy))
+```
+
+Recall that for an estimator to be unbiased, it doesn't mean each estimate "hits the target" (equals $\mu$) EVERY time, but that *on average* (in the long run) it hits the correct target (is centered around the correct value).
+
+We can draw 10,000 random samples of size 5 and compute the sample mean in each sample with the following code:
+
+```{r}
+means <- rep_sample_n(gapminder_2015, size = 5, reps = 10000) %>% 
+  group_by(replicate) %>% 
+  summarize(n = n(),
+            xbar = sum(life_expectancy)/n)
+```
+
+We now have 10,000 $\overline{X}$ estimates, from 10,000 different random samples. We can look at the distribution of these 10,000 values.
+
+```{r}
+ggplot(means, aes(x = xbar)) +
+  geom_histogram(color = "white") +
+  geom_vline(xintercept = mean(gapminder_2015$life_expectancy), 
+             color = "red") +
+  geom_vline(xintercept = mean(means$xbar), 
+             color = "blue", linetype = 2) +
+  theme_light()
+```
+
+We can calculate $E(\overline{X})$ (the long-run average of the sample mean).
+
+```{r}
+means %>% 
+  summarize(Exbar = mean(xbar))
+```
+
+Since the sample mean $\overline{X}$ is an unbiased estimator of the population mean $\mu$, we have $E(\overline{X}) = \mu$.
+
+## Population variance and sample variance
+
+Recall that we can compute the true variance $\sigma^2$ of life expectancy in the population by:
+
+```{r}
+gapminder_2015 %>% 
+  summarize(sigma2 = var(life_expectancy))
+```
+
+Suppose we don't have access to this population level data and instead only have data on a random sample of 5 countries. This means we don't know $\sigma^2$ but have to estimate it. Let's consider two possible ways to estimate $\sigma^2$ from our sample data:
+
+1.  $s^2_n = \frac{\sum_{i = 1}^n (x_i - \overline{x})^2}{n}$
+2.  $s^2 = \frac{\sum_{i = 1}^n (x_i - \overline{x})^2}{n-1}$
+
+Let's draw a random sample of size 5 and compute these two estimates from our sample data.
+
+```{r}
+sample <- gapminder_2015 %>% 
+  sample_n(5)
+sample
+
+sample %>% 
+  summarize(n = n(),
+            xbar = sum(life_expectancy)/n,
+            s2_n = sum((life_expectancy - mean(life_expectancy))^2) / n, 
+            s2 = sum((life_expectancy - mean(life_expectancy))^2) / (n - 1))
+```
+
+Which one is a better estimate of $\sigma^2$? Remember that $s^2_n$ and $s^2$ are both random variables because they are functions of the random variables $x_i$ (the life expectancy in the randomly selected country $i$). If we were to draw a different random sample, it might be the case that the other estimator gave us a "better" estimate (closer to the true $\sigma^2$). In order to see which one is best in the long-run, let's run 10,000 simulations, by taking 10,000 random samples and computing the two variance estimates in each.
+
+```{r}
+variances <- rep_sample_n(gapminder_2015, size = 5, reps = 10000) %>% 
+  group_by(replicate) %>% 
+  summarize(n = n(),
+            xbar = sum(life_expectancy)/n,
+            s2_n = sum((life_expectancy - mean(life_expectancy))^2) / n, 
+            s2 = sum((life_expectancy - mean(life_expectancy))^2) / (n - 1))
+```
+
+Let's now compute the expected value (average) of each estimator.
+
+```{r}
+variances %>% 
+  summarize(Exbar = mean(xbar),
+            Es2_n = mean(s2_n),
+            Es2 = mean(s2))
+```
+
+Which one is closer to the true $\sigma^2$ value?
+
+As these results indicate, $s^2_n = \frac{\sum_{i = 1}^n (x_i - \overline{x})^2}{n}$ is a *biased* estimator of $\sigma^2$. In other words, it's expected value is not equal to $\sigma^2$; in the long-run, on average, it does not "hit the target" and estimate the correct value.
+
+Dividing by $n-1$, however, as in $s^2 = \frac{\sum_{i = 1}^n (x_i - \overline{x})^2}{n - 1}$, gets rid of the bias and does "hit the correct target". That is, $E(s^2) = \sigma^2$.
+
+The following histograms show the bias visually:
+
+```{r, echo = FALSE, message = FALSE}
+ggplot(variances) + 
+  geom_histogram(aes(x = s2_n, fill = "red"), color = "white", alpha = 0.5) +
+  geom_histogram(aes(x = s2, fill = "blue"), color = "white", alpha = 0.5) +
+  geom_vline(xintercept = mean(variances$s2_n), color = "red", size = 1) +
+  geom_vline(xintercept = mean(variances$s2), color = "blue", size = 1) +
+  geom_vline(xintercept = var(gapminder_2015$life_expectancy), linetype = 2, size = 1) +
+  scale_fill_manual(name="Estimator", values = c('blue' = 'blue', 'red' = 'red'), 
+          labels = expression(s^2, s[n]^2)) +
+  xlab("Sample variance estimate") +
+  ylab("Number of samples")
+```

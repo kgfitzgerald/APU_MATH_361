@@ -15,7 +15,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Overview 
+## Overview
 
 In this lab, you will conduct simulations to explore the pmf of a random variable, similar to Lab 03. You should copy, paste, and modify code from that lab.
 
@@ -23,22 +23,21 @@ In this lab, you will conduct simulations to explore the pmf of a random variabl
 
 We will use the following example throughout this lab:
 
-A fair 10-sided die with outcomes 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 is rolled twice. Let $X$ equal the sum of the two outcomes. Then the possible values of $X$ are 2, 3,... 19, 20. It is possible but quite tedious to work out the pmf by hand, and even then it is not immediately obvious how to write the pmf as a general function involving $x$. We can use simulations to explore the distribution of $X$. 
+A fair 10-sided die with outcomes 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 is rolled twice. Let $X$ equal the sum of the two outcomes. Then the possible values of $X$ are 2, 3,... 19, 20. It is possible but quite tedious to work out the pmf by hand, and even then it is not immediately obvious how to write the pmf as a general function involving $x$. We can use simulations to explore the distribution of $X$.
 
 ## Recap of Logic of Simulations
 
-Recall our earlier definition that probability is a mathematical framework for describing and analyzing random phenomenon (i.e. anything we cannot predict with certainty). We said probability can be interpreted as the proportion of times an event will occur *in the long run*. 
+Recall our earlier definition that probability is a mathematical framework for describing and analyzing random phenomenon (i.e. anything we cannot predict with certainty). We said probability can be interpreted as the proportion of times an event will occur *in the long run*.
 
-If we don't have a nice mathematical formula to tell us what to expect in the long run (or even if we do), one great way to help us wrap our minds around the behavior of a random variable in the long run is to *simulate* the random experiment many, many times, and *observe* what happens in the long run. One option is to *physically* simulate an experiment (e.g. roll a physical dice many, many times, spin a spinner many, many times, etc.). But in the year of our Lord, 2023, we have machines that can do these things for us MANY, MANY times, MUCH, MUCH quicker than we could do them physically by hand. 
+If we don't have a nice mathematical formula to tell us what to expect in the long run (or even if we do), one great way to help us wrap our minds around the behavior of a random variable in the long run is to *simulate* the random experiment many, many times, and *observe* what happens in the long run. One option is to *physically* simulate an experiment (e.g. roll a physical dice many, many times, spin a spinner many, many times, etc.). But in the year of our Lord, 2023, we have machines that can do these things for us MANY, MANY times, MUCH, MUCH quicker than we could do them physically by hand.
 
 Anytime we simulate a random variable $X$, it's important to ask ourselves a few questions (in order):
 
-1. *How would I simulate one value of $X$?* 
-1. *How would I simulate many values of $X$ (e.g. 10000+)? This usually involves repeating Step 1 many, many times.* *
-1. *How do I aggregate all the simulated results to tell me what I want to know about the behavior of $X$ in the long run?*
+1.  *How would I simulate one value of* $X$?
+2.  *How would I simulate many values of* $X$ (e.g. 10000+)? This usually involves repeating Step 1 many, many times. \*
+3.  *How do I aggregate all the simulated results to tell me what I want to know about the behavior of* $X$ in the long run?
 
-*Often, R has built in functions for generating random variables, so repeating a simulation large number of times can often be done by simply changing a function argument from $n = 1$ to $n = 100,000$ (or some other large number).
-
+\*Often, R has built in functions for generating random variables, so repeating a simulation large number of times can often be done by simply changing a function argument from $n = 1$ to $n = 100,000$ (or some other large number).
 
 ## Task 1
 
@@ -52,19 +51,19 @@ Start by loading necessary packages. You will need the`tidyverse` package for th
 
 ```
 
-**How would I simulate one value of $X$?**
+**How would I simulate one value of** $X$?
 
 Recall that $X$ is the sum of two rolls of a fair 10-sided die. In order to simulate one value of $X$, we need:
 
-- the result of one roll of a 10-sided die ($d_1$)
-- the result of a 2nd roll of a 10-sided die ($d_2$)
-- the sum of the two rolls $x = d_1 + d_2$
+-   the result of one roll of a 10-sided die ($d_1$)
+-   the result of a 2nd roll of a 10-sided die ($d_2$)
+-   the sum of the two rolls $x = d_1 + d_2$
 
-Recall that rolling a fair dice can be modeled with the uniform distribution. The `purrr` package (which is part of the `tidyverse`) has a function `rdunif()` that allows us to randomly generate numbers from the discrete uniform distribution. The `rdunif` function takes in 3 arguments: 
+Recall that rolling a fair dice can be modeled with the uniform distribution. The `purrr` package (which is part of the `tidyverse`) has a function `rdunif()` that allows us to randomly generate numbers from the discrete uniform distribution. The `rdunif` function takes in 3 arguments:
 
-+ `n` to specify the number of observations to generate (in our case, this will be the number of times we want to run the experiment); 
-+ `a` to specify the minimum integer the random variable can take on; and 
-+ `b` to specify the maximum integer the random variable can take on. 
+-   `n` to specify the number of observations to generate (in our case, this will be the number of times we want to run the experiment);
+-   `a` to specify the minimum integer the random variable can take on; and
+-   `b` to specify the maximum integer the random variable can take on.
 
 ## Task 2
 
@@ -79,7 +78,7 @@ d2 <- rdunif(n = , a = , b = )
 x <- 
 ```
 
-What value of `x` did you get? Verify that it is the sum of the `d1` and `d2` that you generated. 
+What value of `x` did you get? Verify that it is the sum of the `d1` and `d2` that you generated.
 
 > YOUR ANSWER HERE
 
@@ -97,19 +96,19 @@ Verify that `d1`, `d2`, and `x` all have 100,000 elements now before proceeding.
 
 ## Task 4
 
-Combine `d1`, `d2`, and `x` into a data frame called `sims` using the function `data.frame()`. Use the function `dim()` to determine the dimensions of the data. *Hint: see Task 4 in Lab 03* 
+Combine `d1`, `d2`, and `x` into a data frame called `sims` using the function `data.frame()`. Use the function `dim()` to determine the dimensions of the data. *Hint: see Task 4 in Lab 03*
 
 ```{r}
 
 ```
 
-How many rows and columns does `data` have? 
+How many rows and columns does `data` have?
 
 > YOUR ANSWER HERE
 
 ## Task 5
 
-Now that you've simulated many values of $X$, you can now explore its aggregate behavior. 
+Now that you've simulated many values of $X$, you can now explore its aggregate behavior.
 
 As a sanity check, plot `d1` and `d2` (in separate plots) to see if they are uniformly distributed as expected (since they are the rolls of fair dice). Remember, because these are simulations, we only expect the results to be *approximately* correct. *Hint: copy and paste code for creating a bar plot from Lab 03*
 
@@ -123,10 +122,9 @@ Do `d1` and `d2` look uniformly distributed?
 
 ## Task 6
 
-If `d1` and `d2` are both uniform, do you think `d1 + d2` will also be uniform? 
+If `d1` and `d2` are both uniform, do you think `d1 + d2` will also be uniform?
 
 > YOUR GUT INTUITION HERE
-
 
 ## Task 7
 
@@ -142,7 +140,7 @@ Is `x` uniform? Explain your reasoning.
 
 ## Task 8
 
-Given the distribution of `x`, what do you think $E(X)$ is equal to? Note, you do not need to perform calculations here, I am interested in your interpretation of the above results. 
+Given the distribution of `x`, what do you think $E(X)$ is equal to? Note, you do not need to perform calculations here, I am interested in your interpretation of the above results.
 
 > YOUR ANSWER HERE
 
@@ -163,7 +161,6 @@ Create a new random variable $Y$ that is equal to $2X$. What do you expect $E(Y)
 Use your simulations to estimate $E(Y)$ and $V(Y)$.
 
 > YOUR ANSWER HERE
-
 
 ## BONUS: Comparing the simulated distribution to the theoretical distribution
 
@@ -186,4 +183,3 @@ Write code that uses the objects `support` and `pmf` to compute the exact values
 How do these values compare to your approximations in Task 9?
 
 > YOUR ANSWER HERE
-
