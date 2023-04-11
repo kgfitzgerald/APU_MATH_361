@@ -19,7 +19,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Let's begin by loading the necessary packages. 
+Let's begin by loading the necessary packages.
 
 ```{r, message = FALSE}
 library(tidyverse)
@@ -27,9 +27,9 @@ library(tidyverse)
 
 # Tutorial
 
-In this lab, you will practice simulating random variables from various distributions and estimating their means and variances. 
+In this lab, you will practice simulating random variables from various distributions and estimating their means and variances.
 
-Recall an example from lecture. Let $X$ have the pdf $f(x) = 4x^3 , \ \ \ 0 < x < 1$.  If we want to simulate values from this distribution, we can find the cdf $Y = F(x)$ and its inverse $X = F^{-1}(y)$. We then utilize the fact that a cdf always follows a uniform (0,1) distribution. 
+Recall an example from lecture. Let $X$ have the pdf $f(x) = 4x^3 , \ \ \ 0 < x < 1$. If we want to simulate values from this distribution, we can find the cdf $Y = F(x)$ and its inverse $X = F^{-1}(y)$. We then utilize the fact that a cdf always follows a uniform (0,1) distribution.
 
 Note $f(x) = 4x^3 \implies Y =F(x) = \int_0^x4t^3dt=x^4$. Therefore, $F^{-1}(y) = X = Y^{1/4}$. So we can simulate values of $X$ by first simulating $Y$ values from the uniform distribution, and then using $F^{-1}(Y)$ to obtain values of $X$.
 
@@ -68,15 +68,14 @@ V(X) &= E(X^2) - [E(X)]^2 \\
 &= \frac{2}{125} = 0.02\overline{666}
 \end{aligned}$$
 
-We can check our work by computing the mean and variance of our simulate values in R. The built-in R functions are `mean()` and `var()`. Because these are simulated values, the mean and variance will not match exactly, but should be very close. 
+We can check our work by computing the mean and variance of our simulate values in R. The built-in R functions are `mean()` and `var()`. Because these are simulated values, the mean and variance will not match exactly, but should be very close.
 
 ```{r}
 mean(x)
 var(x)
 ```
 
-
-# Tasks 
+# Tasks
 
 # Task 1
 
@@ -91,15 +90,14 @@ Simulate 100,000 values from the Cauchy distribution and plot a histogram of the
 
 ```
 
-
 # Task 2
 
-Perform a simulation to estimate $Cov(V, W)$, where $V = X + Y$, $W = max(X, Y)$, and $X$, $Y$ are both distributed as $N(100, 15)$. To do this, 
+Perform a simulation to estimate $Cov(V, W)$, where $V = X + Y$, $W = max(X, Y)$, and $X$, $Y$ are both distributed as $N(100, 15)$. To do this,
 
-1. Simulate 100,000 x-values using the `rnorm()` function. Recall that the `rnorm()` function requires that you specify `sd`, the standard deviation, not the variance. Run `?rnorm` in your console to pull up the help page.
-2. Simulate 100,000 y-values using the `rnorm()` function
-3. Create new objects `v` and `w` from the simulated `x` and `y` values. Note that the function `pmax()` will compute the pair-wise maximums for two vectors. 
-4. Use the function `cov()` to compute the covariance between `v` and `w`
+1.  Simulate 100,000 x-values using the `rnorm()` function. Recall that the `rnorm()` function requires that you specify `sd`, the standard deviation, not the variance. Run `?rnorm` in your console to pull up the help page.
+2.  Simulate 100,000 y-values using the `rnorm()` function
+3.  Create new objects `v` and `w` from the simulated `x` and `y` values. Note that the function `pmax()` will compute the pair-wise maximums for two vectors.
+4.  Use the function `cov()` to compute the covariance between `v` and `w`
 
 ```{r}
 #simulate 100,000 x-values
@@ -119,7 +117,6 @@ Perform a simulation to estimate $Cov(V, W)$, where $V = X + Y$, $W = max(X, Y)$
 #compute covariance 
 
 ```
-
 
 # Task 3
 
@@ -142,10 +139,10 @@ Use R to compute the mean and variance of your simulated `x` and `y` values from
 
 Exercise 5.1-6 on Homework 09 asks you to find the cdf of $X$ where $f(x) = 2x, 0 < x < 1$ and describe how you would simulate an observation of $X$. Using your work from parts a and b of that exercise, use R to:
 
-1. simulate 100,000 values of $X$
-2. plot a histogram
-3. estimate the mean 
-4. estimate the variance 
+1.  simulate 100,000 values of $X$
+2.  plot a histogram
+3.  estimate the mean
+4.  estimate the variance
 
 ```{r}
 #simulate y
@@ -165,4 +162,3 @@ Exercise 5.1-6 on Homework 09 asks you to find the cdf of $X$ where $f(x) = 2x, 
 
 
 ```
-
