@@ -19,11 +19,11 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In this activity, we will start with a demo of why the formula for $s^2$ divides by $n-1$ instead of $n$. Then, you will conduct some exploratory data analysis on the the `gapminder` dataset as Lab 09.  
+In this activity, we will start with a demo of why the formula for $s^2$ divides by $n-1$ instead of $n$. Then, you will conduct some exploratory data analysis on the the `gapminder` dataset as Lab 09.
 
 ## Load packages
 
-We first need to load the `tidyverse`, `dslabs`, and `infer` packages using the `library()` command. 
+We first need to load the `tidyverse`, `dslabs`, and `infer` packages using the `library()` command.
 
 ```{r}
 #| message: false
@@ -34,7 +34,7 @@ library(infer)
 
 ## Prepare the data
 
-We can load a dataset called `gapminder` that contains data on 185 countries from the years 1960 to 2016. We are going to consider the distribution of the variable `life_expectancy`. 
+We can load a dataset called `gapminder` that contains data on 185 countries from the years 1960 to 2016. We are going to consider the distribution of the variable `life_expectancy`.
 
 ```{r}
 data("gapminder", package = "dslabs") 
@@ -49,7 +49,7 @@ gapminder_2010 <- gapminder %>%
 
 ## Exploratory Data Analysis (Lab 12)
 
-Let's create a histogram of `life_expectancy` across the 185 countries. 
+Let's create a histogram of `life_expectancy` across the 185 countries.
 
 ```{r}
 ggplot(gapminder_2010) +
@@ -60,11 +60,11 @@ ggplot(gapminder_2010) +
 
 ### Task 1
 
-Describe the shape of the distribution. Comment on modality and skewness. 
+Describe the shape of the distribution. Comment on modality and skewness.
 
 > YOUR ANSWER HERE
 
-### Task 2 
+### Task 2
 
 The following code will return a summary of a variable.
 
@@ -72,7 +72,7 @@ The following code will return a summary of a variable.
 summary(gapminder_2010$infant_mortality)
 ```
 
-Use this `summary()` function to compute a summary of life expectancy in the data. 
+Use this `summary()` function to compute a summary of life expectancy in the data.
 
 ```{r}
 #insert code here
@@ -82,19 +82,19 @@ Comment on what you notice.
 
 > YOUR ANSWER HERE
 
-Is the mean or the median life expectancy larger? Why is that? 
+Is the mean or the median life expectancy larger? Why is that?
 
 > YOUR ANSWER HERE
 
 ### Task 3
 
-Let's explore life expectancy by continent. Copy and paste the code above for creating a histogram, and then add a new layer (using the `+` sign) with the code `facet_wrap(~ continent, nrow = 2)` 
+Let's explore life expectancy by continent. Copy and paste the code above for creating a histogram, and then add a new layer (using the `+` sign) with the code `facet_wrap(~ continent, nrow = 2)`
 
 ```{r}
 #insert code here
 ```
 
-Comment on what you notice. 
+Comment on what you notice.
 
 > YOUR ANSWER HERE
 
@@ -115,14 +115,14 @@ Comment on what you notice. Are any features of the data apparent here that were
 
 ### Task 5
 
-Let's investigate the relationship between life expectancy and GDP per capita. Let's first create a new variable `gdp_per_capita` that scales a country's GDP by the number of people in the population. 
+Let's investigate the relationship between life expectancy and GDP per capita. Let's first create a new variable `gdp_per_capita` that scales a country's GDP by the number of people in the population.
 
 ```{r}
 gapminder_2010 <- gapminder_2010 %>% 
   mutate(gdp_per_capita = gdp/population)
 ```
 
-Create a scatterplot to investigate the relationship between life expectancy and GDP per capita. Hint: use `geom_point()` to create a scatterplot. 
+Create a scatterplot to investigate the relationship between life expectancy and GDP per capita. Hint: use `geom_point()` to create a scatterplot.
 
 ```{r}
 #insert code here
@@ -134,13 +134,13 @@ Comment on what you notice.
 
 ### Task 6
 
-Copy and paste the code for the scatterplot above, but add the arguments `color = continent` and `size = population` inside the `aes()` function. 
+Copy and paste the code for the scatterplot above, but add the arguments `color = continent` and `size = population` inside the `aes()` function.
 
 ```{r}
 #insert code here
 ```
 
-What did this do to the graph? 
+What did this do to the graph?
 
 > YOUR ANSWER HERE
 
@@ -150,9 +150,8 @@ Comment on what you notice.
 
 ### BONUS
 
-Utilize the `group_by` and `summarize()` functions to compute the mean and median life expectancy by continent. Hint: refer to how `group_by()` and `summarize()` were used in Lab 11 to compute the sample mean estimates for each replicate. 
+Utilize the `group_by` and `summarize()` functions to compute the mean and median life expectancy by continent. Hint: refer to how `group_by()` and `summarize()` were used in Lab 11 to compute the sample mean estimates for each replicate.
 
 ```{r}
 
 ```
-
