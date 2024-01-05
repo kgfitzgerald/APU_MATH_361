@@ -1,5 +1,5 @@
 ---
-title: "Lab 10"
+title: "Lab 10 / Ch 6 R Activity"
 subtitle: "MATH 361"
 author: "Insert your name here"
 date: "Insert due date here"
@@ -19,91 +19,138 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Tutorial
+In this activity, we will start with a demo of why the formula for $s^2$ divides by $n-1$ instead of $n$. Then, you will conduct some exploratory data analysis on the the `gapminder` dataset as Lab 09.
 
-In this lab, you will use R to compute probabilities from the normal and t distributions and use what you've learned about linear combinations of normal random variables.
+## Load packages
 
-You will use the functions `pt()` and `qt()` to find probabilities and cutoff values from the t-distribution. These functions are analogous to the `p___()` and `q___()` functions you have used from other distributions. The t-distribution requires one parameter - the degrees of freedom; in R this argument is called `df`. You can pull up the help page for the t-distribution functions by typing `?pt()` into your console.
-
-### Example 1
-
-Find $P(44.4 \leq \overline{X} \leq 48.98)$ when $\overline{X}$ is the sample mean of $n = 16$ observations with $X \sim N(46.58,40.96)$
-
-This implies $\overline{X} \sim N(46.58, 40.96/16)$
+We first need to load the `tidyverse`, `dslabs`, and `infer` packages using the `library()` command.
 
 ```{r}
-pnorm(48.98, mean = 46.58, sd = sqrt(40.96/16)) - pnorm(44.42, mean = 46.58, sd = sqrt(40.96/16))
+#| message: false
+library(tidyverse)
+library(dslabs)
+library(infer)
 ```
 
-### Example 2
+## Prepare the data
 
-Find $t_{0.10}(34)$. This asks, what cutoff value gives 0.10 probability in the upper tail for a t-distribution with 34 degrees of freedom. Recall that functions starting with `q` allow us to find cutoff values for a given probability.
+We can load a dataset called `gapminder` that contains data on 185 countries from the years 1960 to 2016. We are going to consider the distribution of the variable `life_expectancy`.
 
 ```{r}
-qt(p = 0.1, df = 34, lower.tail = FALSE)
+data("gapminder", package = "dslabs") 
 ```
 
-### Example 3
-
-Find $P(−1.87 \leq T \leq 1.87)$ when $T \sim t(34)$
+Let's first `filter` the data to keep only the year 2010.
 
 ```{r}
-pt(1.87, df = 34) - pt(-1.87, df = 34)
+gapminder_2010 <- gapminder %>% 
+  filter(year == 2010)
 ```
 
-# Tasks
+## Exploratory Data Analysis (Lab 12)
 
-# Task 1
-
-Let $X_1, X_2, ... X_{16}$ be a random sample from a normal distribution $N(77,25)$. Compute the following. *Hint: you should first determine how* $\overline{X}$ is distributed
-
-a)  $P(77 \leq \overline{X} \leq 79.5)$
-b)  $P(74.2 \leq \overline{X} \leq 78.4)$
+Let's create a histogram of `life_expectancy` across the 185 countries.
 
 ```{r}
-
+ggplot(gapminder_2010) +
+  geom_histogram(aes(x = life_expectancy), color = "white")  +
+  xlab("Life expectancy") +
+  ylab("Number of countries")
 ```
 
-# Task 2
+### Task 1
 
-Find the 95th percentile for the standard normal distribution. Compare it to the 95th percentile for the t-distribution with df = 10, df = 1000, and df = 100,000.
-
-```{r}
-#95th percentile of standard normal
-
-#95th percentile of t(10)
-
-#95th percentile of t(1000)
-
-#95th percentile of t(100000)
-
-```
-
-Which of these four distribution has the "fattest tails"?
+Describe the shape of the distribution. Comment on modality and skewness.
 
 > YOUR ANSWER HERE
 
-Which two distributions are the most similar to one another?
+### Task 2
+
+The following code will return a summary of a variable.
+
+```{r}
+summary(gapminder_2010$infant_mortality)
+```
+
+Use this `summary()` function to compute a summary of life expectancy in the data.
+
+```{r}
+#insert code here
+```
+
+Comment on what you notice.
 
 > YOUR ANSWER HERE
 
-# Task 3
+Is the mean or the median life expectancy larger? Why is that?
 
-Find $P(-2.06 < X < 2.06)$ when $X \sim t(25)$
+> YOUR ANSWER HERE
+
+### Task 3
+
+Let's explore life expectancy by continent. Copy and paste the code above for creating a histogram, and then add a new layer (using the `+` sign) with the code `facet_wrap(~ continent, nrow = 2)`
 
 ```{r}
-
+#insert code here
 ```
 
-# Task 4
+Comment on what you notice.
 
-*\[HTZ 5.5-15, on group work\]*
+> YOUR ANSWER HERE
 
-Let the distribution of $T$ be $t(17)$. Find:
+### Task 4
 
-a.  $t_{0.01}(17)$
-b.  $t_{0.95}(17)$
-c.  $P(-1.74 < T < 1.74)$
+The following code is another way of visualizing life expectancy by continent.
+
+```{r}
+ggplot(gapminder_2010, aes(x = continent, y = life_expectancy)) +
+  geom_boxplot() +
+  labs(x = "Continent", y = "Life expectancy (years)",
+       title = "Life expectancy by continent")
+```
+
+Comment on what you notice. Are any features of the data apparent here that weren't apparent in the faceted histograms?
+
+> YOUR ANSWER HERE
+
+### Task 5
+
+Let's investigate the relationship between life expectancy and GDP per capita. Let's first create a new variable `gdp_per_capita` that scales a country's GDP by the number of people in the population.
+
+```{r}
+gapminder_2010 <- gapminder_2010 %>% 
+  mutate(gdp_per_capita = gdp/population)
+```
+
+Create a scatterplot to investigate the relationship between life expectancy and GDP per capita. Hint: use `geom_point()` to create a scatterplot.
+
+```{r}
+#insert code here
+```
+
+Comment on what you notice.
+
+> YOUR ANSWER HERE
+
+### Task 6
+
+Copy and paste the code for the scatterplot above, but add the arguments `color = continent` and `size = population` inside the `aes()` function.
+
+```{r}
+#insert code here
+```
+
+What did this do to the graph?
+
+> YOUR ANSWER HERE
+
+Comment on what you notice.
+
+> YOUR ANSWER HERE
+
+### BONUS
+
+Utilize the `group_by` and `summarize()` functions to compute the mean and median life expectancy by continent. Hint: refer to how `group_by()` and `summarize()` were used in Lab 11 to compute the sample mean estimates for each replicate.
 
 ```{r}
 
