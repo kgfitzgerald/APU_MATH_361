@@ -174,7 +174,7 @@ Create a second list called `L2` that computes the absolute value of each of the
 
 ```
 
-### Task 6
+## Task 6
 
 Use the function `min()` to compute the minimum value in `L1`. Compare this to the minimum value in `L2`.
 
@@ -187,17 +187,9 @@ Use the function `min()` to compute the minimum value in `L1`. Compare this to t
 
 ## Task 7
 
-Once you have completed Tasks 1 - 6, render the document one last time. Look over the .html document to make sure that everything is visible and formatted as you intended. To submit this lab assignment, you need to export your .html document from RStudio Cloud and then upload it to the Lab 00 assignment on Canvas.
+Once you have completed Tasks 1 - 6, render the document one last time. Look over the .html document to make sure that everything is visible and formatted as you intended. To submit this lab assignment, you will upload your Lab_01.html file to Canvas under the Lab 01 assignment. This file exists in the MATH_361 folder you created on your computer.
 
-To export the file,
-
--   Navigate to the Files pane in RStudio Cloud (bottom right quadrant, to the left of the Viewer tab)
-
--   Select the box next to the appropriate file name in the Files quadrant
-
--   Click "More" (blue gear icon), and then "Export"
-
-The file will export to the downloads file on your computer. To submit on Canvas, follow these steps:
+To submit on Canvas, follow these steps:
 
 -   In the MATH 361 Canvas site, navigate to Lab 01 under Assignments
 
@@ -207,7 +199,7 @@ The file will export to the downloads file on your computer. To submit on Canvas
 
 -   Click "Choose File"
 
--   In the pop-up window, navigate to your Downloads folder and select your html file
+-   In the pop-up window, navigate to your MATH_361 folder and select your html file
 
 -   Click "Submit Assignment"
 
