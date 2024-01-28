@@ -2,7 +2,7 @@
 title: "Lab 03 / 2.1 Group Work"
 subtitle: "Intro to simulations"
 author: "MATH 361"
-date: "Spring 2024"
+date: "Insert due date here"
 format: 
   html:
     self-contained: true
