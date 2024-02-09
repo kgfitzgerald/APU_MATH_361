@@ -41,7 +41,7 @@ Anytime we simulate a random variable $X$, it's important to ask ourselves a few
 
 ## Task 1
 
-Start by loading necessary packages. You will need the`tidyverse` package for this lab. In order for you to get the same results each time you knit your document, add the command `set.seed()` to the code chunk and insert your favorite number in the parentheses.
+Start by loading necessary packages. You will need the `tidyverse` package for this lab. In order for you to get the same results each time you knit your document, add the command `set.seed()` to the code chunk and insert your favorite number in the parentheses.
 
 ```{r, warning = FALSE, message = FALSE}
 # load necessary packages

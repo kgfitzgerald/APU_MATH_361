@@ -73,7 +73,7 @@ ggplot(sims_Y, aes(x = Y)) +
 
 ## Comparing Simulated and Theoretical Probabilities
 
-We can calculate the theoretical probabilities using the pmf and compare them to the simulated probabilities. 
+We can calculate the theoretical probabilities using the pmf and compare them to the simulated probabilities.
 
 ```{r}
 #calculate the theoretical probabilities from the pmf
@@ -119,3 +119,7 @@ ggplot(pmf_Y) +
 *(RP3): What task(s) gave you the most trouble? What was difficult about them/where did you get stuck?*
 
 > YOUR REFLECTION HERE
+
+## SUBMISSION
+
+If you submit a completed activity, you can earn up to 3 extra credit points on Exam 1. Turn in your html document on Canvas to submit. Tasks 4 - 6 (done by hand) can either be typed up in this document using LaTeX, or you can scan your work and (1) submit it as a separate document or (2) embed it as an image in the Tasks 4 - 6 section above (when in Visual view, click Insert \> Figure/Image).
