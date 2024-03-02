@@ -16,7 +16,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 ```{r}
@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-In this lab, you will actually conduct the simulations that you wrote psuedocode for in 2.1 Group Work.
+In this lab, you will actually conduct the simulations that you wrote psuedocode for in 2.1 Group Work. *Solutions are posted! You are encouraged to utilize them*.
 
 Recall our random experiment of flipping a weighted coin 3 times, where each toss has a 70% probability of landing on heads. This could be used to model the \# of shots a 70% free throw shooter will make if they shoot 3 free throws (we are considering the shots to be independent).
 

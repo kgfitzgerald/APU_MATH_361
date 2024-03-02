@@ -30,29 +30,32 @@ library(distributional)
 
 Commands for continuous random variables are similar to those for discrete random variables. As noted in Lab 05, the abbreviated name of the distribution is preceded by once of four letters:
 
-* “d” for the density function (pdf for continuous random variables)
-* “p” for the distribution function (cdf)
-*	“q” for quantile function (gives the quantile for a given probability)
-*	“r” for random (generates a random number based on the distribution
+-   “d” for the density function (pdf for continuous random variables)
+-   “p” for the distribution function (cdf)
+-   “q” for quantile function (gives the quantile for a given probability)
+-   “r” for random (generates a random number based on the distribution
 
 ## Computing probabilities for continuous distributions in R
 
 The cdf values $F(X) = P(X < x)$ are returned with commands using "p" at the beginning of the R distribution name:
 
-* `punif(x, min, max)` returns $F(x)$ values for a uniform random variable $X \sim U(a, b)$ where the arguments `min` and `max` correspond to the parameters $a$ and $b$ respectively.
+-   `punif(x, min, max)` returns $F(x)$ values for a uniform random variable $X \sim U(a, b)$ where the arguments `min` and `max` correspond to the parameters $a$ and $b$ respectively.
 
-* `pexp(x, rate)` - returns $F(x)$ values for an exponential random variable $X \sim exp(\lambda)$ with argument `rate` =  $\lambda = 1/\theta$ 
-    + Note our textbook defines exponential distributions in terms of the parameter $\theta$, which is the mean wait time, instead of the rate $\lambda$.
+-   `pexp(x, rate)` - returns $F(x)$ values for an exponential random variable $X \sim exp(\lambda)$ with argument `rate` = $\lambda = 1/\theta$
 
-* `pgamma(x, shape, scale = 1/rate)` - returns $F(x)$ values for a gamma random variable $X \sim(\alpha , \theta)$ with parameters `shape` = $\alpha$ and `scale` =  $\theta = 1/\lambda$.
-    + Because the gamma function can be parameterized in terms of scale or rate, make sure to name the argument inside the `pgamma()` function to specify which parameter you're defining. 
+    -   Note our textbook defines exponential distributions in terms of the parameter $\theta$, which is the mean wait time, instead of the rate $\lambda$.
 
-* `pchisq(x, df)` - returns $F(x)$ values for a chi-square random variable $X \sim \chi^2(r)$ where the argument `df` corresponds to the degrees of freedom parameter `r`.
+-   `pgamma(x, shape, scale = 1/rate)` - returns $F(x)$ values for a gamma random variable $X \sim(\alpha , \theta)$ with parameters `shape` = $\alpha$ and `scale` = $\theta = 1/\lambda$.
 
-* `pnorm(x, mean, sd)` - returns $F(x)$ values for a normal random variable $X \sim N(\mu, \sigma^2)$ with parameter arguments `mean` = $\mu$, and `sd` = $\sigma$.
-    + NOTE: the `_norm()` functions in R are defined in terms of the standard deviation $\sigma$, not the variance $\sigma^2$!
+    -   Because the gamma function can be parameterized in terms of scale or rate, make sure to name the argument inside the `pgamma()` function to specify which parameter you're defining.
 
-There is a hidden argument in each of these functions called `lower.tail`, and the default is set to `lower.tail = TRUE`. Meaning, by default, the "p" functions return the probabilities in the *lower tail* of the density function: $F(X) = P(X <x)$. Sometimes it will be useful to override the default by adding the argument `lower.tail = FALSE`, which will return values $F(X) = P(X > x)$. You can think of these two options visually; `lower.tail = TRUE` represents the pink shaded region $P(X < 10)$, and `lower.tail = FALSE` represents the blue shaded region  $P(X > 10)$ in the plot below.  
+-   `pchisq(x, df)` - returns $F(x)$ values for a chi-square random variable $X \sim \chi^2(r)$ where the argument `df` corresponds to the degrees of freedom parameter `r`.
+
+-   `pnorm(x, mean, sd)` - returns $F(x)$ values for a normal random variable $X \sim N(\mu, \sigma^2)$ with parameter arguments `mean` = $\mu$, and `sd` = $\sigma$.
+
+    -   NOTE: the `_norm()` functions in R are defined in terms of the standard deviation $\sigma$, not the variance $\sigma^2$!
+
+There is a hidden argument in each of these functions called `lower.tail`, and the default is set to `lower.tail = TRUE`. Meaning, by default, the "p" functions return the probabilities in the *lower tail* of the density function: $F(X) = P(X <x)$. Sometimes it will be useful to override the default by adding the argument `lower.tail = FALSE`, which will return values $F(X) = P(X > x)$. You can think of these two options visually; `lower.tail = TRUE` represents the pink shaded region $P(X < 10)$, and `lower.tail = FALSE` represents the blue shaded region $P(X > 10)$ in the plot below.
 
 ```{r}
 #| echo: false
@@ -68,10 +71,9 @@ ggplot() +
   theme_minimal()
 ```
 
-
 ### Uniform example
 
-Suppose $X \sim U(0,5)$. Let's compute the probability that $X < 2$ using the `punif()` function. 
+Suppose $X \sim U(0,5)$. Let's compute the probability that $X < 2$ using the `punif()` function.
 
 ```{r}
 punif(2, 0, 5)
@@ -135,12 +137,12 @@ pgamma(2, shape = 3, scale = 4, lower.tail = FALSE)
 
 ## Computing percentiles for continuous distributions in R
 
-The inverse of the cdf, or the $x$ that solves the equation $p = F(x) = P(X < x)$, are returned with commands using “q” at the beginning of the R distribution name:  
+The inverse of the cdf, or the $x$ that solves the equation $p = F(x) = P(X < x)$, are returned with commands using “q” at the beginning of the R distribution name:
 
-* `qunif(p, min, max)` – finds $x$ such that $P(X < x) = p$ for a uniform random variable $X \sim U(a, b)$ where the arguments `min` and `max` correspond to the parameters $a$ and $b$ respectively. 
-* `qexp(p, rate)` - finds $x$ such that $P(X < x) = p$ for an exponential random variable $X \sim exp(\lambda)$ with argument `rate` =  $\lambda = 1/\theta$ 
-* `qgamma(p, shape, scale = 1/rate)` - finds $x$ such that $P(X < x) = p$ for a gamma random variable $X \sim(\alpha , \theta)$ with parameters `shape` = $\alpha$ and `scale` =  $\theta = 1/\lambda$.
-* `qchisq(p, df)` - finds $x$ such that $P(X < x) = p$ for a chi-square random variable $X \sim \chi^2(r)$ where the argument `df` corresponds to the degrees of freedom parameter `r`.
+-   `qunif(p, min, max)` – finds $x$ such that $P(X < x) = p$ for a uniform random variable $X \sim U(a, b)$ where the arguments `min` and `max` correspond to the parameters $a$ and $b$ respectively.
+-   `qexp(p, rate)` - finds $x$ such that $P(X < x) = p$ for an exponential random variable $X \sim exp(\lambda)$ with argument `rate` = $\lambda = 1/\theta$
+-   `qgamma(p, shape, scale = 1/rate)` - finds $x$ such that $P(X < x) = p$ for a gamma random variable $X \sim(\alpha , \theta)$ with parameters `shape` = $\alpha$ and `scale` = $\theta = 1/\lambda$.
+-   `qchisq(p, df)` - finds $x$ such that $P(X < x) = p$ for a chi-square random variable $X \sim \chi^2(r)$ where the argument `df` corresponds to the degrees of freedom parameter `r`.
 
 Again, set `lower.tail = FALSE` to use upper tail probabilities and find $x$ such that $P(X > x) = p.$
 
@@ -172,7 +174,7 @@ ggplot() +
 
 ### Exponential example
 
-Suppose $X \sim exp(\theta = 3)$. Find the median. 
+Suppose $X \sim exp(\theta = 3)$. Find the median.
 
 ```{r}
 qexp(0.5, rate = 1/3)
@@ -215,11 +217,11 @@ Find $P(X > 5)$ if $X \sim \Gamma(\alpha = 2, \theta = 2)$
 
 If $X$ is $\chi^2(17)$, find
 
-a. $P(X < 7.564)$
-b. $P(X > 27.59)$
-c. $P(6.408 < Z < 27.59)$
-d. $\chi^2_{0.95}(17)$ (i.e. find the 95th percentile). 
-e. $\chi^2_{0.025}(17)$ (i.e. find the 2.5th percentile)
+a.  $P(X < 7.564)$
+b.  $P(X > 27.59)$
+c.  $P(6.408 < Z < 27.59)$
+d.  $\chi^2_{0.95}(17)$ (i.e. find the 95th percentile).
+e.  $\chi^2_{0.025}(17)$ (i.e. find the 2.5th percentile)
 
 ### Part a
 
@@ -267,8 +269,7 @@ If $X$ is $\chi^2(12)$, find constants $a$ and $b$ such that $$P(a < X < b) = 0.
 
 *From Hogg, Tanis, and Zimmermann; Exercise 3.2-16*
 
-Cars arrive at a tollbooth at a mean rate of 5 cars every 10 minutes according to a Poisson process. Find the probability that the toll collector will have to wait longer than 26.30 minutes before collecting the eighth toll. 
-Comment on how you solve the problem including what distribution you use to model this scenario, the parameter values, and why you implemented the R commands you did. 
+Cars arrive at a tollbooth at a mean rate of 5 cars every 10 minutes according to a Poisson process. Find the probability that the toll collector will have to wait longer than 26.30 minutes before collecting the eighth toll. Comment on how you solve the problem including what distribution you use to model this scenario, the parameter values, and why you implemented the R commands you did.
 
 ```{r}
 
@@ -282,9 +283,9 @@ Comment on how you solve the problem including what distribution you use to mode
 
 If $X$ is normally distributed with a mean of 6 and a variance of 25, find
 
-a. $P(6 \leq X \leq 12)$
-b. $P(X > 21)$
-c. $P(|X - 6| < 5)$
+a.  $P(6 \leq X \leq 12)$
+b.  $P(X > 21)$
+c.  $P(|X - 6| < 5)$
 
 ### Part a
 

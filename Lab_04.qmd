@@ -29,7 +29,7 @@ A fair 10-sided die with outcomes 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 is rolled tw
 
 Recall our earlier definition that probability is a mathematical framework for describing and analyzing random phenomenon (i.e. anything we cannot predict with certainty). We said probability can be interpreted as the proportion of times an event will occur *in the long run*.
 
-If we don't have a nice mathematical formula to tell us what to expect in the long run (or even if we do), one great way to help us wrap our minds around the behavior of a random variable in the long run is to *simulate* the random experiment many, many times, and *observe* what happens in the long run. One option is to *physically* simulate an experiment (e.g. roll a physical dice many, many times, spin a spinner many, many times, etc.). But in the year of our Lord, 2024, we have machines that can do these things for us MANY, MANY times, MUCH, MUCH quicker than we could do them physically by hand.
+If we don't have a nice mathematical formula to tell us what to expect in the long run (or even if we do), one great way to help us wrap our minds around the behavior of a random variable in the long run is to *simulate* the random experiment many, many times, and *observe* what happens in the long run. One option is to *physically* simulate an experiment (e.g. roll a physical dice many, many times, spin a spinner many, many times, etc.). But in the year of our Lord, 2025, we have machines that can do these things for us MANY, MANY times, MUCH, MUCH quicker than we could do them physically by hand.
 
 Anytime we simulate a random variable $X$, it's important to ask ourselves a few questions (in order):
 
