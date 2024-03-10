@@ -1,0 +1,161 @@
+---
+title: "Lab 12 / Ch 6 R Activity"
+subtitle: "MATH 361"
+author: "Insert your name here"
+date: "Insert due date here"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this lab, you will conduct some exploratory data analysis on the the `gapminder` dataset.
+
+## Load packages
+
+We first need to load the `tidyverse`, `dslabs`, and `infer` packages using the `library()` command.
+
+```{r}
+#| message: false
+library(tidyverse)
+library(dslabs)
+library(infer)
+```
+
+## Prepare the data
+
+We can load a dataset called `gapminder` that contains data on 185 countries from the years 1960 to 2016. We are going to consider the distribution of the variable `life_expectancy`.
+
+```{r}
+data("gapminder", package = "dslabs") 
+```
+
+Let's first `filter` the data to keep only the year 2010.
+
+```{r}
+gapminder_2010 <- gapminder %>% 
+  filter(year == 2010)
+```
+
+## Exploratory Data Analysis (Lab 12)
+
+Let's create a histogram of `life_expectancy` across the 185 countries.
+
+```{r}
+ggplot(gapminder_2010) +
+  geom_histogram(aes(x = life_expectancy), 
+                 color = "white")  +
+  xlab("Life expectancy") +
+  ylab("Number of countries")
+```
+
+### Task 1
+
+Describe the shape of the distribution. Comment on modality and skewness.
+
+> YOUR ANSWER HERE
+
+### Task 2
+
+The following code will return a summary of a variable.
+
+```{r}
+summary(gapminder_2010$infant_mortality)
+```
+
+Use this `summary()` function to compute a summary of life expectancy in the data.
+
+```{r}
+#insert code here
+```
+
+Comment on what you notice.
+
+> YOUR ANSWER HERE
+
+Is the mean or the median life expectancy larger? Why is that?
+
+> YOUR ANSWER HERE
+
+### Task 3
+
+Let's explore life expectancy by continent. Copy and paste the code above for creating a histogram, and then add a new layer (using the `+` sign) with the code `facet_wrap(~ continent, nrow = 2)`
+
+```{r}
+#insert code here
+```
+
+Comment on what you notice.
+
+> YOUR ANSWER HERE
+
+### Task 4
+
+The following code is another way of visualizing life expectancy by continent.
+
+```{r}
+ggplot(gapminder_2010, 
+       aes(x = continent, 
+           y = life_expectancy)) +
+  geom_boxplot() +
+  labs(x = "Continent", 
+       y = "Life expectancy (years)",
+       title = "Life expectancy by continent")
+```
+
+Comment on what you notice. Are any features of the data apparent here that weren't apparent in the faceted histograms?
+
+> YOUR ANSWER HERE
+
+### Task 5
+
+Let's investigate the relationship between life expectancy and GDP per capita. Let's first create a new variable `gdp_per_capita` that scales a country's GDP by the number of people in the population.
+
+```{r}
+gapminder_2010 <- gapminder_2010 %>% 
+  mutate(gdp_per_capita = gdp/population)
+```
+
+Create a scatterplot to investigate the relationship between life expectancy and GDP per capita. Hint: use `geom_point()` to create a scatterplot.
+
+```{r}
+#insert code here
+```
+
+Comment on what you notice.
+
+> YOUR ANSWER HERE
+
+### Task 6
+
+Copy and paste the code for the scatterplot above, but add the arguments `color = continent` and `size = population` inside the `aes()` function.
+
+```{r}
+#insert code here
+```
+
+What did this do to the graph?
+
+> YOUR ANSWER HERE
+
+Comment on what you notice.
+
+> YOUR ANSWER HERE
+
+### BONUS
+
+Utilize the `group_by` and `summarize()` functions to compute the mean and median life expectancy by continent. Hint: refer to how `group_by()` and `summarize()` were used in Lab 11 to compute the empirical expected value for each simulated sample size.
+
+```{r}
+
+```
