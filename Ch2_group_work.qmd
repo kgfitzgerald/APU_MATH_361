@@ -1,0 +1,101 @@
+---
+title: "Chapter 2 Group Work"
+subtitle: "Template"
+author: "Insert your name here"
+date: "Insert due date here"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| message: false
+#| warning: false
+#| label: load-packages
+library(tidyverse)
+```
+
+## Task 3
+
+```{r}
+# simulation code
+
+## set random seed - change to favorite number
+set.seed(437)
+
+## simulate vector of "true" red/green values
+## TRUE = green, FALSE = red
+truth <- rbernoulli(100000, .75)
+
+## simulate Strategy A guesses
+
+## simulate Strategy B guesses
+
+## evaluate whether guesses match truth
+
+## estimate probability of success for Strategy A & for Strategy B
+```
+
+## Simulating Y
+
+```{r}
+set.seed(437)
+#initialize empty vector
+#will fill with the # of trials needed to reach first success 
+Y <- c()
+for(i in 1:10000){
+  #initialize the # of successes and # of trials to be 0
+  num_successes <- 0
+  trials <- 0
+#while # of succceses remains 0,
+#generate a new observation x of a bernoulli random variable 
+#update the number of trials
+#once x = TRUE, num_successes will be updated to 1
+#and while loop will end
+while(num_successes < 1){
+    x <- rbernoulli(1, .75)
+    num_successes <- num_successes + x
+    trials <- trials + 1
+}
+#fill element i of the vector Y with the number of trials 
+#it took to reach the first success
+Y[i] <- trials
+#for loop repeats this process 10,000 times
+}
+#place simulation results in a dataframe
+sims_Y <- data.frame(Y)
+#plot simulation results
+ggplot(sims_Y, aes(x = Y)) +
+  geom_histogram()
+```
+
+## Comparing Simulated & Theoretical Probabilities
+
+```{r}
+#calculate the theoretical probabilities from the pmf
+support_Y <- seq(1, max(Y))
+fY <-  .75*(.25)^(support_Y-1)
+pmf_Y <- data.frame(Y = support_Y, fY)
+#add a column with the simulated relative frequencies
+pmf_Y$fY_sims <- proportions(table(sims_Y))
+pmf_Y
+
+#plot the theoretical probabilites on top of the simulated distribution
+ggplot(pmf_Y) +
+  geom_col(aes(x = Y, y = fY)) +
+  geom_line(aes(x = Y, y = fY_sims), color = "red") +
+  geom_point(aes(x = Y, y = fY_sims), color = "blue")
+```
+
+## Task 8
+
+```{r}
+
+```

@@ -1,0 +1,130 @@
+---
+title: "Lab 07"
+subtitle: "MATH 361"
+author: "Insert your name here"
+date: "Insert due date here"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+# Tutorial
+
+This lab has you work with probabilities and percentiles from the normal distribution. Recall the following functions:
+
+-   `pnorm(x, mean, sd)` - returns $F(x) = P(X \leq x)$ values for a normal random variable $X \sim N(\mu, \sigma^2)$ with parameter arguments `mean` = $\mu$, and `sd` = $\sigma$.
+
+-   `qnorm(p, mean, sd)` - finds $x$ such that $P(X < x) = p$ for a normal random variable $X \sim N(\mu, \sigma^2)$ with parameter arguments `mean` = $\mu$, and `sd` = $\sigma$.
+
+REMEMBER: the `_norm()` functions in R are defined in terms of the standard deviation $\sigma$, not the variance $\sigma^2$!
+
+The following code finds $P(X < 1800)$ when $X$ is normally distributed with mean 1500 and variance 90000.
+
+```{r}
+pnorm(1800, 1500, sqrt(90000))
+```
+
+Note that `pnorm` and `qnorm` are inverse functions. The following code finds the percentile cutoff, $x$, such that $P(X \leq x)$ is 0.8413447. Based on our answer above, we should expect the following output to give us the score 1800.
+
+```{r}
+qnorm(0.8413447, 1500, sqrt(90000))
+```
+
+# Tasks
+
+Note that both tasks are odd exercises from the HTZ textbook, so you can check your answers in the back of the book.
+
+## Task 1
+
+*\[Problem 3.3-1\]* If $Z$ is $N(0,1)$, find:
+
+a.  $P(0.47 < Z < 2.13)$
+
+```{r}
+
+```
+
+b.  $P(-0.97 \leq Z < 1.27)$
+
+```{r}
+
+```
+
+c.  $P(Z > -1.56)$
+
+```{r}
+
+```
+
+d.  $P(Z > 2.78)$
+
+```{r}
+
+```
+
+e.  $P(|Z| < 1.96)$
+
+```{r}
+
+```
+
+f.  $P(|Z| < 1)$
+
+```{r}
+
+```
+
+g.  $P(|Z| < 2)$
+
+```{r}
+
+```
+
+h.  $P(|Z| < 3)$
+
+```{r}
+
+```
+
+i.  What rule do parts f - h demonstrate?
+
+> YOUR ANSWER HERE
+
+## Task 2
+
+\[*Problem 3.3-3*\] If $Z$ is $N(0,1)$, find values of $c$ such that:
+
+a.  $P(Z \geq c) = 0.025$
+
+```{r}
+
+```
+
+b.  $P(|Z| \leq c) = 0.95$
+
+```{r}
+
+```
+
+c.  $P(Z > c) = 0.05$
+
+```{r}
+
+```
+
+d.  $P(|Z| \leq c) = 0.90$
+
+```{r}
+
+```
+
+e.  Comment on how your answers in parts a - d relate to your answers in Task 1.
+
+> YOUR ANSWER HERE

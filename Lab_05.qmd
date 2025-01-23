@@ -1,0 +1,243 @@
+---
+title: "Lab 05"
+subtitle: "MATH 361"
+author: "Insert your name here"
+date: "Insert due date here"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+This lab will have you work with the Binomial distribution in R. We begin with a tutorial to introduce the R commands associated with this distributions. There is also a template exercise provided as an example of how to format your answers neatly, integrating both math symbols and R code. Task 1 is an odd-numbered exercise from the textbook, so you can check your answers to help you verify `dbinom()` and `pbinom()` work as you expect.
+
+Let's begin by loading the necessary packages. Most of the functions in this lab are in base R, meaning they don't require any additional packages, but we'll load the `tidyverse` so we can use `%>%` and `ggplot()` when doing some additional exploration!
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+# Tutorial
+
+R includes many built in functions for common distributions. Commands for each follow the same basic format. The abbreviated name of the distribution is preceeded by once of four letters:
+
+-   "d" for the density function (pmf for discrete random variables)
+-   "p" for the cumulative distribution function (cdf)
+-   "q" for the quantile function (gives the x value for a given cummulative probability)
+-   "r" for random (generates a random number based on the distribution)
+
+The **binomial distribution** pmf and cdf in R:
+
+-   `dbinom(x, size, prob)` -- returns $f(x) = P(X = x),$ (pmf) values for a binomial random variable $X$,
+-   `pbinom(x, size, prob)` -- returns $F(x) = P(X \leq x),$ values for the binomial distribution (cdf)
+
+Note that both have three arguments defined as:
+
+-   `x` = the value of the random variable for which a probability is computed
+-   `size` = number of trials (this is what we usually refer to as $n$)
+-   `prob` = probability of success on a trial (what we usually refer to as $p$)
+
+Note that `x` can be a vector, meaning you can compute multiple probabilities with a single command!
+
+## Binomial Example
+
+Suppose $X \sim b(10, 0.3)$. The probability that $X = 2$ is given by
+
+```{r}
+dbinom(2, 10, 0.3)
+```
+
+The probability that $X \leq 2$ is given by
+
+```{r}
+pbinom(2, 10, 0.3)
+```
+
+Recall that $P(X \leq 2) = P(X = 0) + P(X = 1) + P(X = 2)$, so we could also have gotten the same result with the following code:
+
+```{r}
+dbinom(0, 10, 0.3) + dbinom(1, 10, 0.3) + dbinom(2, 10, 0.3)
+```
+
+We could compute the probability for all possible values of $X = 0, 1, \dots , 10$ by making `x` a vector.
+
+```{r}
+x <- c(0:10)
+dbinom(x, 10, 0.3)
+```
+
+We can do a sanity check to make sure that all of those densities sum to 1. That is, to verify $\sum_S f(x) = 1$.
+
+```{r}
+sum(dbinom(x, 10, 0.3))
+```
+
+We can use the vector of densities to plot the pmf
+
+```{r}
+data <- data.frame(x = x,
+                   d = dbinom(x, 10, 0.3))
+
+ggplot(data = data) +
+  geom_col(aes(x = x, y = d))
+```
+
+```{r}
+# a prettier version of the plot
+ggplot(data = data) +
+  #using factor(x) tells ggplot to treat x as discrete, 
+  #so it labels the x axis at the integers 0:10
+  #fill = "skyblue" changes the color of the bars
+  geom_col(aes(x = factor(x), y = d), fill = "skyblue") +
+  #changes axis labels
+  labs(x = "x", y = "Density f(x)") +
+  theme_classic()
+```
+
+## Template for Task Solution
+
+*You can use the following solution as a template for how to format your solutions on Tasks 1 & 2 below.*
+
+*From Hogg, Tanis, and Zimmermann; Exercise 2.4-10*
+
+A certain type of mint has a label weight of 20.4 grams. Suppose that the probability is 0.90 that a mint weighs more than 20.7 grams. Let $X$ equal the number of mints that weigh more than 20.7 grams in a sample of eight mints selected at random.
+
+a.  Find the mean and standard deviation of $X$
+b.  Find the probability that exactly 8 mints weigh more than 20.7 grams
+c.  Find the probability that no more that 6 mints weigh more than 20.7 grams
+
+## ANSWER
+
+\[OPTIONAL BUT ENCOURAGED: to help us verify that our answers are reasonable, we can first plot the distribution\]
+
+$X \sim b(8, 0.9)$
+
+```{r}
+#create vector of possible x values
+x <- c(0:8)
+#create vector of corresponding densities
+d <- dbinom(x, 8, 0.9)
+#combine into a data frame for plotting
+data <- data.frame(x, d)
+
+ggplot(data = data) +
+  geom_col(aes(x = factor(x), y = d), fill = "navyblue") +
+  labs(x = "x", y = "Density f(x)") +
+  theme_classic()
+```
+
+### Part a
+
+$$\mu = np = 8 \cdot 0.9$$ $$\sigma = \sqrt{np(1-p)} = \sqrt{8 \cdot 0.9 \cdot 0.1}$$
+
+```{r}
+mu <- 8*0.9
+sigma <- sqrt(8*0.9*0.1)
+solution <- data.frame(mu, sigma)
+solution
+```
+
+### Part b
+
+$P(X = 8)$
+
+```{r}
+dbinom(8, size = 8, prob = 0.9)
+```
+
+### Part c
+
+$P(X \leq 6)$
+
+```{r}
+pbinom(6, size = 8, prob = 0.9)
+```
+
+# Task 1
+
+*From Hogg, Tanis, and Zimmermann; Exercise 2.4-5*
+
+In a lab experiment involving inorganic syntheses of molecular precursors to organometallic ceramics, the final step of a five-step reaction involves the formation of a metal--metal bond. The probability of such a bond forming is $p = 0.20$. Let $X$ equal the number of successful reactions out of $n = 25$ such experiments.
+
+a.  Find the probability that $X$ is at most 4.
+b.  Find the probability that $X$ is at least 5.
+c.  Find the probability that $X$ is equal to 6.
+d.  Give the mean, variance, and standard deviation of $X$.
+
+## ANSWER
+
+```{r}
+
+```
+
+### Part a
+
+```{r}
+
+```
+
+### Part b
+
+```{r}
+
+```
+
+### Part c
+
+```{r}
+
+```
+
+### Part d
+
+```{r}
+
+```
+
+# Task 2
+
+*From Hogg, Tanis, and Zimmermann; Exercise 2.4-6*
+
+It is believed that approximately 75% of American youth now have insurance due to the health care law. Suppose this is true, and let $X$ equal the number of American youth in a random sample of $n = 15$ with private health insurance.
+
+a.  Find the probability that $X$ is at least 10.
+b.  Find the probability that $X$ is at most 10.
+c.  Find the probability that $X$ is equal to 10.
+d.  Give the mean, variance, and standard deviation of $X$.
+
+## ANSWER
+
+```{r}
+
+```
+
+### Part a
+
+```{r}
+
+```
+
+### Part b
+
+```{r}
+
+```
+
+### Part c
+
+```{r}
+
+```
+
+### Part d
+
+```{r}
+
+```

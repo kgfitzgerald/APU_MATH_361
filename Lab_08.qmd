@@ -1,0 +1,223 @@
+---
+title: "Lab 08"
+subtitle: "MATH 361"
+author: "Insert your name here"
+date: "Insert due date here"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+Begin by loading necessary packages. You may need to run `install.packages("cowplot")` in your console to install the `cowplot` package (i.e. if you get a "could not find" error).
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(cowplot) 
+```
+
+# Tutorial
+
+In this lab, you will explore properties of covariance, correlation, and slope of a least squares regression line.
+
+We will work with some real data in this lab, from the `mtcars` dataset, which comes pre-loaded in R. Running the following code will let you view the first 6 rows of the data.
+
+```{r}
+head(mtcars)
+```
+
+If you run `?mtcars` in your console, a Help window with data documentation will appear. Running `View(mtcars)` in your console will allow you to view the full dataset in a new tab.
+
+In this lab, we will be working with the `mpg` variable, which measures the miles per gallon for each car, and the `wt` variable which provides the weight of each car in 1000s of pounds.
+
+In order to access an individual variable from a dataset, we use the dollar sign \$, with the general syntax `dataset$variable`. The code below extracts the variable `mpg`.
+
+```{r}
+mtcars$mpg
+```
+
+We can then use functions such as `mean()` and `sd()` to compute the mean and standard deviation of a variable.
+
+```{r}
+#average the cars' mpg
+mean(mtcars$mpg)
+
+#standard deviation of the cars' mpg
+sd(mtcars$mpg)
+```
+
+The function `cov()` will compute the covariance between two variables.
+
+```{r}
+cov(mtcars$mpg, mtcars$wt)
+```
+
+The code below creates a simple plot of the two variables.
+
+```{r}
+plot(mtcars$mpg, mtcars$wt)
+```
+
+We can make the graph look a little more professional and add the line of best fit using `ggplot2` functions from the `tidyverse` package.
+
+```{r}
+ggplot(mtcars, aes(x = mpg, y = wt)) + 
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(x = "Miles per gallon",
+       y = "Weight (in 1000lbs)",
+       title = "Data from 32 cars",
+       subtitle = "Source: 1974 Motor Trend US Magazine")
+```
+
+## Tasks
+
+### Task 1
+
+Create three objects called `cov_xy`, `sd_x`, and `sd_y` that contain the covariance and standard deviations of `mpg` (x) and `wt` (y). Print out the values of all three.
+
+```{r}
+
+```
+
+Based on those calculations, would you say `mpg` and `wt` are positively or negatively correlated with one another?
+
+> YOUR ANSWER HERE
+
+### Task 2
+
+Explain how the values in Task 1 are enough to determine whether the slope of the least squares line will be positive or negative.
+
+> YOUR ANSWER HERE
+
+### Task 3
+
+Use the three objects from Task 1 to compute the correlation of `mpg` and `wt`, using formulas from 4.2.
+
+```{r}
+
+```
+
+Use the function `cor()` to compute the correlation and confirm your answer above.
+
+```{r}
+
+```
+
+### Task 4
+
+Compute the slope of the least squares regression line for this data using the formulas derived in section 4.2.
+
+```{r}
+
+```
+
+R has a built-in function called `lm()` that will compute the least squares regression line. Use this to confirm your calculation above.
+
+```{r}
+lm(wt ~ mpg, data = mtcars)
+```
+
+### Task 5
+
+In reality, weight probably helps explain/predict `mpg`, and not the other way around. Therefore, `mpg` is more appropriate as our outcome variable, `y`. Compute the covariance, correlation, and the slope when `y = mpg` and `x = wt`.
+
+```{r}
+
+```
+
+Explain why the values stayed the same and/or changed, referencing what you know about the underlying formulas for each.
+
+> YOUR NAME HERE
+
+### Task 6
+
+Copy, paste, tweak the `ggplot` code in the Tutorial section to reflect the change to `y = mpg` and `x = wt`. Make sure to update the axis labels as well.
+
+```{r}
+
+```
+
+### Task 7
+
+The variable `wt` is currently measured in 1000s of pounds. Suppose we instead wanted it measured in 1000s of kilograms. The code below creates a new variable with the converted weight, using the conversion factor that 1lb = 0.453592kg.
+
+```{r}
+mtcars$wt_kg <- mtcars$wt*0.453592
+```
+
+Based on your results from the HW 08 Additional Problem, do you expect this change in units to change the correlation between mpg and weight?
+
+> YOUR ANSWER HERE
+
+Compute the correlation between `mpg` and `wt_kg` to confirm your answer.
+
+```{r}
+
+```
+
+### Task 8
+
+Compute the covariance between `mpg` and `wt_kg`.
+
+```{r}
+
+```
+
+Does covariance have the same "unitless" property of correlation?
+
+> YOUR ANSWER HERE
+
+### Task 9
+
+Compute the slope of the least squares regression line for `y = mpg` and `x = wt_kg`.
+
+```{r}
+
+```
+
+Comment on why the slope changes, despite the correlation staying the same.
+
+> YOUR ANSWER HERE
+
+### Task 10
+
+The following code produces histograms of the two weight variables. Comment on how the graphs illustrate the reason for the change in slope discussed in Task 9.
+
+```{r, warning = FALSE}
+p1 <- ggplot(mtcars, aes(x = wt_kg)) +
+  geom_histogram(color = "white",
+                 binwidth = 0.5) +
+  theme_minimal() +
+  xlim(0,6)
+
+
+p2 <- ggplot(mtcars, aes(x = wt)) +
+  geom_histogram(color = "white",
+                 binwidth = 0.5) +
+  theme_minimal() +
+  xlim(0,6)
+
+plot_grid(p1, p2, nrow = 2)
+```
+
+> YOUR ANSWER HERE
+
+### BONUS
+
+Determine the exact factor that the slope changed by when the units were changed. That is, find $c$ such that $c*b_{wt} = b_{wt\_kg}$, where $b$ is the slope for each respective line.
+
+```{r}
+
+```
+
+Explain/show mathematically where this factor came from. Consider the formula for slope and properties of variance.
+
+> YOUR ANSWER HERE

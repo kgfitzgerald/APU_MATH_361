@@ -1,0 +1,132 @@
+---
+title: "Lab 03 / 2.1 Group Work"
+subtitle: "Intro to simulations"
+author: "MATH 361"
+date: "Insert due date here"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r}
+#| label: load-packages
+#| echo: false
+#| message: false
+library(tidyverse)
+```
+
+In this lab, you will actually conduct the simulations that you wrote psuedocode for in 2.1 Group Work. *Solutions are posted! You are encouraged to utilize them*.
+
+Recall our random experiment of flipping a weighted coin 3 times, where each toss has a 70% probability of landing on heads. This could be used to model the \# of shots a 70% free throw shooter will make if they shoot 3 free throws (we are considering the shots to be independent).
+
+We are interested in the following three random variables:
+
+-   $X$ = the total number of heads (made shots)
+-   $Y$ = whether or not there is a heads (made shot) on the 2nd flip
+-   $Z$ = the number of heads (makes) minus the number of tails (misses)
+
+## Task 1
+
+Simulate 1 run of this experiment by creating three objects `toss1`, `toss2`, and `toss3`. You can make use of the function `rbernoulli()`, which takes two arguments:
+
+-   n = number of runs of the experiment
+-   p = probability of success
+
+```{r}
+
+```
+
+## Task 2
+
+Use the `toss1`, `toss2`, `toss3` objects to create your random variables `X`, `Y`, and `Z`.
+
+```{r}
+
+```
+
+## Task 3
+
+Adapt your code from Tasks 1 and 2 to simulate 100,000 values of `X`, `Y`, and `Z`
+
+```{r}
+
+```
+
+## Task 4
+
+The following code combines the vectors into a data frame, and creates summary tables and a visualization for the distribution of `X`. Remove `eval: false` so the output will be in your html.
+
+```{r}
+#| eval: false
+
+# create data frame
+sims <- data.frame(toss1, toss2, toss3, X, Y, Z)
+
+# check dimensions - should be 100000 x 6
+dim(sims)
+
+# create frequency table
+table(sims$X)
+
+# create relative frequency table
+proportions(table(sims$X))
+
+# create visualization
+ggplot(sims, aes(x = X)) +
+  geom_bar()
+```
+
+Interpret these results in the context of the free throw shooting example.
+
+> YOUR ANSWER HERE
+
+## Task 5
+
+Create the frequency table, relative frequency table, and bar plot for `Y`. Do the same for `Z`.
+
+```{r}
+
+```
+
+Comprehension check: for each random variable, what should the counts in the frequency table add to? What should the relative frequencies add to?
+
+> YOUR ANSWER HERE
+
+## Task 6
+
+Comment on the distributions of `Y` and `Z`. Do they fit your intuition? What do you notice about distributions of `X` and `Z`?
+
+> YOUR ANSWER HERE
+
+## Task 7
+
+A great benefit of simulations is we can approximate the expected value of a random variable by calculating the mean of many simulated observations of that random variable. For example, we can get an approximate value of $E(X)$ by calculating `mean(X)`.
+
+Compute the approximate expected value for `X`, `Y`, and `Z`.
+
+```{r}
+
+```
+
+How do these compare to the true expected values you computed in Group Work 2.2?
+
+> YOUR ANSWER HERE
+
+## BONUS
+
+Let's assume that these 3 free throws take place with \<1 second left on the clock, when the shooting team is down by 2. Use your simulations to find the approximate probability that:
+
+-   The shooting team wins
+-   The shooting team loses
+-   The game goes to overtime

@@ -1,0 +1,145 @@
+---
+title: "Lab 02"
+author: "YOUR NAME HERE"
+date: "ENTER DATE HERE"
+format: 
+  html:
+    self-contained: true
+    toc: true
+    toc_float: true
+    number-section: false
+    highlight: tango
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This lab is organized in 2 sections: Tutorial & Tasks
+
+The tutorial section will introduce new R commands, and the Tasks have you practice using those commands to answer questions. You should turn in this lab with all Tasks completed.
+
+Let's first begin by loading the package we will need in this Lab: `gtools`. You may need to install the package first by running `install.packages("gtools")` in your console. You can think of a package like an app on your phone: you only need to install it once, but you must "open" it each time you want to use it. In order to "open" (i.e. "load") the package, we use the `library()` command.
+
+```{r}
+#| message: false
+library(gtools)
+```
+
+Note that R typically prints out lots of messages when we load packages, but we set `message: false` when defining the code chunk above to suppress the messages and de-clutter our html document.
+
+# Tutorial
+
+### Methods of Enumeration (Book Section 1.2) in R
+
+*\[Note: In order to view the mathematical formulas in this section, it will be easiest to read this section in the rendered .html OR by reading the .qmd in "Visual" mode; you can toggle between "Source" and "Visual" mode using the toolbar in the top left of RStudio . If you're curious, comparing the syntax inside the dollar signs in the "Source" mode to the formatted formulas in the html document will give you insight into how to type pretty math text using LaTeX!\].*
+
+#### Factorials
+
+Recall that $$n! = n \cdot (n-1) \cdot (n-2) \cdots 3 \cdot 2\cdot 1$$
+
+Therefore, if $n = 7$ then $n! = 7! = 7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 5040$. The function `factorial()` in R computes $n!$ for any integer input `n`. The code below computes `7!` and returns the value 5040.
+
+```{r}
+factorial(7)
+```
+
+#### Combinations
+
+Recall that the number of combinations $_nC_k$ (read "n choose k") is defined as $$_nC_k = {n\choose k} = \frac{n!}{k!(n-k)!}$$
+
+The number of possible combinations can be easily computed in `R` using the function `choose()`. This function takes in two arguments, named - you guessed it - `n` and `k`. The following code computes $$_5C_3 = {5\choose 3} = \frac{5!}{3!(5-3)!}$$ and returns the value 10.
+
+```{r}
+choose(n = 5, k = 3)
+```
+
+Note the code `choose(5, 3)` will return the same result because `R` automatically assigns the first input to the argument `n` and the second input to the argument `k`, without us having to specify the name of the argument.
+
+```{r}
+choose(5, 3)
+```
+
+The function `combinations()` will actually list all the possible combinations. That is, the code `combinations(5,3)` will list the 10 different ways it is possible to choose 3 elements from a list of 5 elements.
+
+```{r}
+combinations(5, 3)
+```
+
+Instead of just generic number orderings, you can also provide the function with a vector of names/labels to choose from. For example, if we create a vector of names (called `names`) of the five people in Dr. Fitz's immediate family, `combinations(5, 3, names)` will return the 10 combinations of 3 people we could choose from her family.
+
+```{r}
+names <- c("Jim", "Liz", "Erin", "Katie", "Anna")
+combinations(5, 3, names)
+```
+
+#### Permutations
+
+Recall that permutations give the total number of ways to order $k$ unique subjects, selected from $n$ subjects. Our mathematical formula is $$_nP_k = \frac{n!}{(n - k)!}$$
+
+In a similar fashion to `combinations()`, the function `permutations()` returns a matrix of all the possible permutations.
+
+```{r}
+permutations(5, 3, names)
+```
+
+If we want to simply compute the number of permutations (instead of listing them all out), we can nest the `permutations()` code inside the `nrow()` function, which counts the number of rows in a matrix or dataframe. The following code chunk computes $$_5P_3 = \frac{5!}{(5 - 3)!}$$ and should return the value 60.
+
+```{r}
+nrow(permutations(5, 3))
+```
+
+# Tasks
+
+Now that you've been introduced to some operations and functions in `R`, complete the following tasks for the Lab 02 assignment.
+
+For Tasks 1 - 3, assume Adam, Bianca, Cam, Derek, Emilio, and Faith attend a gathering and are selected as the six finalists for 3 door prizes. Suppose names are drawn randomly from a hat.
+
+### Task 1
+
+The six attendees are given seats at the front of the room before the drawing. How many different possible ways can the six people be seated in six seats?
+
+```{r}
+
+```
+
+### Task 2
+
+The first prize is better than the second which is better than the third. How many possible sets of prize winners are possible if it matters who wins which prize (and nobody can receive more than one prize). Also produce these different sets with the NAMES of the finalists included (see the family names example above).
+
+```{r}
+
+```
+
+### Task 3
+
+All three prizes are the same, and nobody can win more than one. How many possible sets of winners are now possible if it doesn't matter which prize a person earns. Again, also use R to produce the different possible sets of winners using their names.
+
+```{r}
+
+```
+
+### BONUS 1
+
+Having to use `nrow()` around `permutations()` is a little cumbersome and computationally wasteful (generates a whole matrix only to collapse it down to one number by counting its rows). We can use R to write our own functions. The code below creates a function called `perm_count`, which takes the arguments `n` and `k`, and uses the permutation formula (involving factorials) to compute $_nP_k$
+
+```{r}
+perm_count <- function(n, k){
+  factorial(n)/(factorial(n - k))
+}
+```
+
+Write a similar function called `comb_count` that computes the number of combinations. Note, your function should return the same values as the `choose()` function. Use your function to compute 64 choose 4.
+
+```{r}
+
+```
+
+### BONUS 2 - EXTRA CHALLENGE
+
+Write a function called `pascals` that takes in one argument `n` and returns a vector with the `n + 1` coefficients of the $n^{th}$ row of Pascal's triangle. That is `pascals(0)` should return `1`, `pascals(3)` should return `1 3 3 1`, etc. Note, there are many ways to do this, but you can make use of existing R functions such as `choose()` and/or `factorial()`.
